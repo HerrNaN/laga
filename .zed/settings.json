@@ -1,0 +1,17 @@
+{
+  "lsp": {
+    "css-variables": {
+      "binary": {
+        "env": {
+          "CSS_LSP_PATH_DISPLAY": "abbreviated",
+        },
+      },
+      "settings": {
+        "cssVariables": {
+          "blacklistFolders": ["**/.git/**", "backend/dist/**"],
+          "undefinedVarFallback": "info",
+        },
+      },
+    },
+  },
+}
