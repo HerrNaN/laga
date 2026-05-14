@@ -1,0 +1,30 @@
+[tools]
+go = "1.26"
+node = "24"
+pnpm = "11"
+
+[tasks.dev-fe]
+description = "Run Vite dev server (backend proxies to this)"
+dir = "frontend"
+run = "pnpm dev"
+
+[tasks.dev-be]
+description = "Run backend with Vite proxy (VITE_DEV_PROXY must be set)"
+dir = "backend"
+run = "go run ."
+env.VITE_DEV_PROXY = "http://localhost:5173"
+
+[tasks.dev]
+description = "Run backend and frontend in parallel"
+depends = ["dev-fe", "dev-be"]
+
+[tasks.build-fe]
+description = "Build frontend for production"
+dir = "frontend"
+run = "pnpm run build"
+
+[tasks.build-be]
+depends = ["build-fe"]
+description = "Build Go backend binary"
+dir = "backend"
+run = "go build ."
