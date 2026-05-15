@@ -1,7 +1,11 @@
 [tools]
+"github:MrLesk/Backlog.md" = "latest"
 go = "1.26"
 node = "24"
 pnpm = "11"
+
+[shell_alias]
+backlog = "backlog-bun"
 
 [tasks.dev-fe]
 description = "Run Vite dev server (backend proxies to this)"
@@ -28,3 +32,6 @@ depends = ["build-fe"]
 description = "Build Go backend binary"
 dir = "backend"
 run = "go build ."
+
+[tasks.backlog-web]
+run = "backlog-bun browser"
