@@ -36,6 +36,9 @@ const createItemsStore = () => {
         ),
       );
     },
+    deleteItem: (id: string) => {
+      update((items) => items.filter((item) => item.id !== id));
+    },
   };
 };
 
