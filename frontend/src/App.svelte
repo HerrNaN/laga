@@ -15,20 +15,36 @@
     <header>
         <h1>laga</h1>
     </header>
+    <div class="list-area">
+        <ItemList items={$items} />
+    </div>
     <AddItem />
-    <ItemList items={$items} />
 </main>
 
 <style>
+    :global(body) {
+        margin: 0;
+    }
+
     main {
-        max-width: 100%;
-        min-height: 100dvh;
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
         background-color: var(--wa-color-surface-default);
     }
 
+    .list-area {
+        flex: 1;
+        overflow-y: auto;
+    }
+
     header {
+        position: sticky;
+        top: 0;
         padding: var(--wa-space-m);
-        border-bottom: 1px solid var(--wa-color-surface-border);
+        border-bottom: var(--wa-border-width-s) var(--wa-border-style)
+            var(--wa-color-surface-border);
+        background-color: var(--wa-color-surface-default);
     }
 
     h1 {

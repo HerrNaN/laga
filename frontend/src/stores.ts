@@ -22,7 +22,7 @@ const createItemsStore = () => {
     },
     addItem: (text: string) => {
       const item: Item = {
-        id: crypto.randomUUID(),
+        id: crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`,
         text,
         checked: false,
         createdAt: new Date(),
