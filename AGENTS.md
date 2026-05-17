@@ -6,3 +6,17 @@
   - DO: `section { ... }; input { ... }`
   - DONT: `.component__base { ... }; .component__input { ... }`
 - **Locally import webawesome components when used:** In every file where a webawesome component is used (`<wa-...`) that component MUST be imported in that file.
+
+## Agent skills
+
+### Issue tracker
+
+Issues live in Backlog.md. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Backlog.md labels mapped to canonical triage roles. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context repo. See `docs/agents/domain.md`.
