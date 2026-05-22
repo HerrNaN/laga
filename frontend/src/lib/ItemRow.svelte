@@ -11,13 +11,21 @@
 
     let { item }: Props = $props();
 
+    let isRemoving = $state(false);
+
     const handleToggle = () => {
         items.toggleItem(item.id);
     };
+
+    const handleTransitionEnd = (e: TransitionEvent) => {
+        if (e.propertyName === "opacity" && isRemoving) {
+            items.deleteItem(item.id);
+        }
+    };
 </script>
 
-<li>
-    <SwipeAction ontrigger={() => items.deleteItem(item.id)}>
+<li class:removing={isRemoving} ontransitionend={handleTransitionEnd}>
+    <SwipeAction ontrigger={() => (isRemoving = true)} disabled={isRemoving}>
         {#snippet underlay()}
             <div class="underlay">
                 <wa-icon name="trash"></wa-icon>
@@ -39,6 +47,12 @@
         align-items: center;
         justify-items: stretch;
         margin-inline: var(--wa-space-2xs);
+        transition: opacity var(--wa-transition-normal) ease;
+    }
+
+    li.removing {
+        opacity: 0;
+        pointer-events: none;
     }
 
     .content {
