@@ -64,7 +64,7 @@
         padding-inline: var(--wa-space-s);
         background-color: var(--wa-color-surface-default);
         border-color: var(--wa-color-neutral-border-normal);
-        border-radius: var(--wa-border-width-s);
+        border-radius: var(--wa-border-width-l);
         border-style: var(--wa-border-style);
         border-width: var(--wa-border-width-s);
 
@@ -87,7 +87,7 @@
         justify-content: end;
         background-color: var(--wa-color-danger-fill-loud);
         color: var(--wa-color-brand-on-loud);
-        border-radius: var(--wa-border-width-s);
+        border-radius: var(--wa-border-width-l);
         border-style: var(--wa-border-style);
         border-width: var(--wa-border-width-s);
     }
