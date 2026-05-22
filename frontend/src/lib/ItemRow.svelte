@@ -24,7 +24,11 @@
     };
 </script>
 
-<li class:removing={isRemoving} ontransitionend={handleTransitionEnd}>
+<div
+    class="container"
+    class:removing={isRemoving}
+    ontransitionend={handleTransitionEnd}
+>
     <SwipeAction ontrigger={() => (isRemoving = true)} disabled={isRemoving}>
         {#snippet underlay()}
             <div class="underlay">
@@ -38,21 +42,17 @@
             >
         </div>
     </SwipeAction>
-</li>
+</div>
 
 <style>
-    li {
-        height: 3.25rem;
-        display: flex;
-        align-items: center;
-        justify-items: stretch;
-        margin-inline: var(--wa-space-2xs);
+    .container {
+        height: 100%;
         transition: opacity var(--wa-transition-normal) ease;
-    }
 
-    li.removing {
-        opacity: 0;
-        pointer-events: none;
+        &.removing {
+            opacity: 0;
+            pointer-events: none;
+        }
     }
 
     .content {
