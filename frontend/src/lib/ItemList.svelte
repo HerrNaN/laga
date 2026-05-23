@@ -1,6 +1,8 @@
 <script lang="ts">
+    import { items } from "../stores";
     import type { Item } from "./item";
     import ItemRow from "./ItemRow.svelte";
+    import "@awesome.me/webawesome/dist/components/button/button.js";
 
     interface Props {
         items: Item[];
@@ -22,7 +24,17 @@
 
 {#if checkedItems.length > 0}
     <div class="checked-section">
-        <h2>Checked</h2>
+        <h2>
+            Checked
+            <wa-button
+                size="s"
+                variant="brand"
+                appearance="plain"
+                onclick={() => items.deleteCheckedItems()}
+            >
+                Clear
+            </wa-button>
+        </h2>
         <ul>
             {#each checkedItems as item (item.id)}
                 <li>
@@ -56,8 +68,11 @@
     }
 
     h2 {
-        margin: 0;
-        padding: var(--wa-space-xs) var(--wa-space-m) 0;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-block: var(--wa-space-xs);
+        padding: 0 var(--wa-space-m);
         font-size: var(--wa-font-size-xs);
         text-transform: uppercase;
         letter-spacing: 0.05em;

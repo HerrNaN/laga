@@ -39,6 +39,9 @@ const createItemsStore = () => {
     deleteItem: (id: string) => {
       update((items) => items.filter((item) => item.id !== id));
     },
+    deleteCheckedItems: () => {
+      update((items) => items.filter((item) => !item.checked));
+    },
   };
 };
 
