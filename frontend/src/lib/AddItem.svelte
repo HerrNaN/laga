@@ -40,7 +40,7 @@
     .backdrop {
         position: fixed;
         inset: 0;
-        background-color: rgba(0, 0, 0, 0.4);
+        background-color: var(--wa-color-overlay-modal);
         pointer-events: none;
         opacity: 0;
         transition: opacity var(--wa-transition-fast) ease;
@@ -54,7 +54,8 @@
     section {
         position: relative;
         padding: var(--wa-space-m);
-        box-shadow: 0 -0.25rem 0.75rem var(--wa-color-shadow);
+        box-shadow: 0 var(--wa-shadow-offset-x-l) var(--wa-shadow-offset-y-l)
+            var(--wa-color-shadow);
         background-color: var(--wa-color-surface-default);
     }
 </style>
