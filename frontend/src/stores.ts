@@ -2,6 +2,9 @@ import { writable } from "svelte/store";
 import type { Item } from "./lib/item";
 import { setItems } from "./db";
 
+const createItemID = () =>
+  `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
 const createItemsStore = () => {
   const { subscribe, set, update } = writable<Item[]>([]);
   let loaded = false;
@@ -22,7 +25,7 @@ const createItemsStore = () => {
     },
     addItem: (text: string) => {
       const item: Item = {
-        id: crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+        id: createItemID(),
         text,
         checked: false,
         createdAt: new Date(),
