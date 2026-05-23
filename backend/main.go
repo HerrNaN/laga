@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"os"
 	"strings"
+	"time"
 )
 
 //go:embed all:dist
@@ -26,16 +27,15 @@ func main() {
 		if err != nil {
 			slog.Error("invalid env", "name", "VITE_DEV_PROXY", "value", viteProxy, "error", err)
 		}
-		proxy := httputil.NewSingleHostReverseProxy(target)
-		originalDirector := proxy.Director
-		proxy.Director = func(req *http.Request) {
-			originalDirector(req)
-			req.Host = target.Host
+
+		proxy := &httputil.ReverseProxy{
+			Rewrite: func(pr *httputil.ProxyRequest) {
+				pr.SetURL(target)
+				pr.In.Host = target.Host
+			},
 		}
 
-		mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-			proxy.ServeHTTP(w, r)
-		})
+		mux.Handle("/", proxy)
 		slog.Info("Development mode", "proxy_destination", viteProxy)
 	} else {
 		staticFS, err := fs.Sub(dist, "dist")
@@ -51,9 +51,14 @@ func main() {
 		})
 	}
 
-	addr := "0.0.0.0:8080"
-	slog.Info("Server starting", "address", addr)
-	if err := http.ListenAndServe(addr, mux); err != nil {
+	server := &http.Server{
+		Handler:           mux,
+		Addr:              "0.0.0.0:8080",
+		ReadHeaderTimeout: time.Second,
+	}
+
+	slog.Info("Server starting", "address", server.Addr)
+	if err := server.ListenAndServe(); err != nil {
 		slog.Error("server error", "error", err)
 		return
 	}

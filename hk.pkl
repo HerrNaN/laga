@@ -1,0 +1,43 @@
+amends "package://github.com/jdx/hk/releases/download/v1.45.0/hk@1.45.0#/Config.pkl"
+import "package://github.com/jdx/hk/releases/download/v1.45.0/hk@1.45.0#/Builtins.pkl"
+
+local linters = new Mapping<String, Step> {
+  // General
+  ["check-added-large-files"] = Builtins.check_added_large_files
+  ["check-case-conflict"] = Builtins.check_case_conflict
+  ["check-executables-have-shebangs"] = Builtins.check_executables_have_shebangs
+  ["check-merge-conflict"] = Builtins.check_merge_conflict
+  ["check-symlinks"] = Builtins.check_symlinks
+
+  // Golang
+  ["go-fumpt"] = Builtins.go_fumpt
+  ["go-imports"] = Builtins.go_imports
+  ["go-lines"] = Builtins.go_lines
+  ["go-sec"] = (Builtins.go_sec) {
+    check = "cd {{workspace}} && gosec -quiet ./..."
+  }
+  ["go-vet"] = Builtins.go_vet
+  ["go-vuln-check"] = Builtins.go_vuln_check
+  ["golangci-lint"] = Builtins.golangci_lint
+  ["go-mod-tidy"] = (Builtins.gomod_tidy) {
+    workspace_indicator = "go.mod"
+    check_diff = "cd {{workspace}} && go mod tidy -diff"
+    fix = "cd {{workspace}} && go mod tidy"
+  }
+
+  // Mise
+  ["mise"] = Builtins.mise
+
+  // Web
+  ["oxlint"] = Builtins.ox_lint
+}
+
+hooks {
+  ["fix"] {
+    fix = true
+    steps = linters
+  }
+  ["check"] {
+    steps = linters
+  }
+}
