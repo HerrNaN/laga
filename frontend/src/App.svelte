@@ -13,7 +13,7 @@
 
 <main>
     <header>
-        <h1>laga</h1>
+        <h1>Shopping list</h1>
     </header>
     <div class="list-area">
         <ItemList items={$items} />
