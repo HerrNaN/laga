@@ -27,10 +27,11 @@ description = "Build frontend for production"
 dir = "frontend"
 run = "pnpm run build"
 
-[tasks.build-be]
+[tasks.build]
 depends = ["build-fe"]
 description = "Build Go backend binary"
 dir = "backend"
+env.CGO_ENABLED = "0"
 run = "go build ."
 
 [tasks.backlog-web]
