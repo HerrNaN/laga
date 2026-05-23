@@ -21,6 +21,17 @@ func main() {
 	})))
 	mux := http.NewServeMux()
 
+	cacheControl := func(path string) string {
+		switch {
+		case strings.HasPrefix(path, "/assets/"):
+			return "public, max-age=31536000, immutable"
+		case path == "/index.html" || path == "/":
+			return "no-cache"
+		default:
+			return "no-cache"
+		}
+	}
+
 	viteProxy := os.Getenv("VITE_DEV_PROXY")
 	if viteProxy != "" {
 		target, err := url.Parse(viteProxy)
@@ -47,6 +58,7 @@ func main() {
 			if _, err := staticFS.Open(strings.TrimPrefix(r.URL.Path, "/")); err != nil {
 				r.URL.Path = "/"
 			}
+			w.Header().Set("Cache-Control", cacheControl(r.URL.Path))
 			fileServer.ServeHTTP(w, r)
 		})
 	}
