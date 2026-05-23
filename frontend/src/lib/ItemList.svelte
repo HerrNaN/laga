@@ -63,4 +63,8 @@
         letter-spacing: 0.05em;
         color: var(--wa-color-neutral-on-normal);
     }
+
+    wa-button {
+        -webkit-tap-highlight-color: transparent;
+    }
 </style>
