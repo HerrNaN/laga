@@ -13,6 +13,7 @@ gofumpt = "latest"
 "github:securego/gosec" = "latest"
 golangci-lint = "latest"
 oxlint = "latest"
+pulumi = "latest"
 
 [shell_alias]
 backlog = "backlog-bun"
@@ -46,3 +47,13 @@ run = "go build ."
 
 [tasks.backlog-web]
 run = "backlog-bun browser"
+
+[tasks.bootstrap-preview]
+description = "Preview Pulumi bootstrap stack changes"
+dir = "deploy/bootstrap"
+run = "pulumi preview"
+
+[tasks.bootstrap-up]
+description = "Apply Pulumi bootstrap stack"
+dir = "deploy/bootstrap"
+run = "pulumi up"

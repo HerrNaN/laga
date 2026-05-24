@@ -402,3 +402,42 @@ provenance = "github-attestations"
 checksum = "sha256:c904bff9595cd681bb8c396b454677a5294217e1726b7afca1839bbbb31a91d2"
 url = "https://github.com/pnpm/pnpm/releases/download/v11.2.2/pnpm-win32-x64.zip"
 provenance = "github-attestations"
+
+[[tools.pulumi]]
+version = "3.142.0"
+backend = "aqua:pulumi/pulumi"
+
+[tools.pulumi."platforms.linux-arm64"]
+checksum = "sha512:b244585c54d8b4307634e52d5582279ef3de80358970546dc5b22d41bb27dcf6672a0de8ece8923ff416dd35c456ed8bb05e52fb8b252e9422d63ab0ae0dad8a"
+url = "https://github.com/pulumi/pulumi/releases/download/v3.142.0/pulumi-v3.142.0-linux-arm64.tar.gz"
+provenance = "cosign"
+
+[tools.pulumi."platforms.linux-arm64-musl"]
+checksum = "sha512:b244585c54d8b4307634e52d5582279ef3de80358970546dc5b22d41bb27dcf6672a0de8ece8923ff416dd35c456ed8bb05e52fb8b252e9422d63ab0ae0dad8a"
+url = "https://github.com/pulumi/pulumi/releases/download/v3.142.0/pulumi-v3.142.0-linux-arm64.tar.gz"
+provenance = "cosign"
+
+[tools.pulumi."platforms.linux-x64"]
+checksum = "sha512:7c037b84714f2675c47131a95c0c8555636ec2ea710e14928d89f6d15cd28d3d2af5481e498f20abed94c229a6e09da613d96bd979d62ac3eece0cf3a46511a4"
+url = "https://github.com/pulumi/pulumi/releases/download/v3.142.0/pulumi-v3.142.0-linux-x64.tar.gz"
+provenance = "cosign"
+
+[tools.pulumi."platforms.linux-x64-musl"]
+checksum = "sha512:7c037b84714f2675c47131a95c0c8555636ec2ea710e14928d89f6d15cd28d3d2af5481e498f20abed94c229a6e09da613d96bd979d62ac3eece0cf3a46511a4"
+url = "https://github.com/pulumi/pulumi/releases/download/v3.142.0/pulumi-v3.142.0-linux-x64.tar.gz"
+provenance = "cosign"
+
+[tools.pulumi."platforms.macos-arm64"]
+checksum = "sha512:e23efffdc464b58960b138eb72fb13842201e195740ad7f2572d00a010945ad628ab1c533951427383ed66c1d4da0d0a543ea2b6ea849fea85366cdda80a6e06"
+url = "https://github.com/pulumi/pulumi/releases/download/v3.142.0/pulumi-v3.142.0-darwin-arm64.tar.gz"
+provenance = "cosign"
+
+[tools.pulumi."platforms.macos-x64"]
+checksum = "sha512:65391271f70e8080b8c9d1e59e8a987c4d722a12fedcbac636fe130532f4c5006e6a8e4dba322ea26340195ce05ed36870a064a11a3941b32bfb926145d1aee6"
+url = "https://github.com/pulumi/pulumi/releases/download/v3.142.0/pulumi-v3.142.0-darwin-x64.tar.gz"
+provenance = "cosign"
+
+[tools.pulumi."platforms.windows-x64"]
+checksum = "sha512:2e54433c4ce0d0083c8cc21ce2b685fd98b98b08163ee423fd46ff9218b40fe5069bd7d810b9f89ced88ac5afef0ad4e19334ca6a7987f9204a2a07cde28c13f"
+url = "https://github.com/pulumi/pulumi/releases/download/v3.142.0/pulumi-v3.142.0-windows-x64.zip"
+provenance = "cosign"
