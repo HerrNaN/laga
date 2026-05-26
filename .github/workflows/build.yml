@@ -22,6 +22,8 @@ jobs:
       - uses: jdx/mise-action@v4
 
       - uses: ./.github/actions/build-image
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: ./.github/actions/deploy
         with:

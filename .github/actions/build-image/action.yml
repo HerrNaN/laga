@@ -1,5 +1,9 @@
 name: Build Image
 description: Build container image
+inputs:
+  github-token:
+    required: true
+    description: Github Token
 
 runs:
   using: composite
@@ -30,7 +34,7 @@ runs:
       with:
         registry: ${{ env.REGISTRY }}
         username: github_workflow
-        password: ${{ secrets.GITHUB_TOKEN }}
+        password: ${{ inputs.github-token }}
 
     - name: Push Images
       id: push
