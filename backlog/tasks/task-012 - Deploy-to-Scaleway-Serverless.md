@@ -4,7 +4,7 @@ title: Deploy to Scaleway Serverless
 status: To Do
 assignee: []
 created_date: '2026-05-23 14:06'
-updated_date: '2026-05-23 14:19'
+updated_date: '2026-05-24 09:04'
 labels:
   - deploy
 dependencies: []
@@ -69,3 +69,50 @@ User → Serverless Container (Go binary with embedded SPA, served over HTTPS vi
 - [ ] #2 Dockerfile exists with multi-stage build producing minimal image
 - [ ] #3 Go backend emits correct Cache-Control headers (immutable for /assets/*, no-cache for index.html, no-store for /api/*)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+---
+## Deployment Infrastructure
+
+### Stack structure
+- **deploy/bootstrap/** — Creates Scaleway Project, IAM Application, Policy, and API Key. Uses local Pulumi state (admin credentials).
+- **deploy/infra/** — Creates Container Namespace and Serverless Container. Uses S3 state backend (deploy key credentials).
+
+### Bootstrap stack outputs
+- `project_id` — Scaleway project ID
+- `organization_id` — Scaleway organization ID
+- `access_key` / `secret_key` — Deploy pipeline API key (scoped to laga project)
+
+### IAM Policy
+- Application: laga-deploy
+- Permission sets: ContainersFullAccess, ObjectStorageFullAccess
+- Scoped to: laga project only
+
+### Deployment workflow
+1. Bootstrap (one-time, admin creds): `cd deploy/bootstrap && pulumi login --local && pulumi up`
+2. Create state bucket (manual, one-time): `scw bucket create laga-pulumi-state --project-id <project_id>`
+3. Infra (uses deploy key): `cd deploy/infra && pulumi login s3://laga-pulumi-state && pulumi up`
+
+### Customize image tag
+`pulumi config set laga:imageTag <sha>` or `pulumi up --config laga:imageTag=<sha>`
+
+---
+## Two-stack deployment architecture
+
+### Bootstrap stack (`deploy/bootstrap/`)
+- Creates: Scaleway Project, IAM Application, IAM Policy, API Key, infra state bucket + bucket policy
+- State backend: `s3://laga-pulumi-state-bootstrap` (manually created)
+- Bucket policy on bootstrap bucket: admin user only (set manually)
+
+### Infra stack (`deploy/infra/`)
+- Creates: Container Namespace, Serverless Container
+- State backend: `s3://laga-pulumi-state-infra` (created by bootstrap stack)
+- Bucket policy on infra bucket: deploy app only (set by Pulumi)
+
+### Access isolation
+- Deploy key cannot access bootstrap state (denied by bucket policy omission)
+- Admin user cannot access infra state (denied by bucket policy omission)
+- Must use deploy key for infra operations
+<!-- SECTION:NOTES:END -->

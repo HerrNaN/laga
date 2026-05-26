@@ -9,14 +9,16 @@ Two stacks, each with its own state backend and credentials:
 | Stack | State Backend | Credentials | Purpose |
 |-------|--------------|-------------|---------|
 | `bootstrap` | Scaleway Object Storage (`s3://laga-pulumi-state-admin`) | Admin Scaleway credentials | Creates project, IAM, API key, infra state bucket + policy |
+| `infra` | Scaleway Object Storage (`s3://laga-pulumi-state`) | Deploy key (scoped to laga project) | Creates container namespace and serverless container |
 
 ```
 Scaleway Organization
   └── Project: laga
         ├── Container Namespace: laga
         │     └── Container: laga (ghcr.io/herrnan/laga:latest, port 8080)
+        ├── Object Storage Bucket: laga-pulumi-state-admin (manual)
         ├── Object Storage Bucket: laga-pulumi-state (IaC)
-        │     └── Bucket Policy: laga-deploy app only
+        │     └── Bucket Policy: admin user + laga-deploy application
         └── IAM
               ├── Application: laga-deploy
               ├── Policy: laga-deploy-policy (ContainersFullAccess + ObjectStorageFullAccess, scoped to laga project)
@@ -35,22 +37,7 @@ Scaleway Organization
 This bucket is created outside Pulumi so Pulumi can use it for bootstrap state immediately.
 
 ```bash
-scw bucket create laga-pulumi-state-admin
-
-# Apply a bucket policy allowing only your admin user.
-# Find your user ID with: scw iam user info
-aws s3api put-bucket-policy --bucket laga-pulumi-state-admin \
-  --endpoint-url https://s3.fr-par.scw.cloud \
-  --policy '{
-    "Version": "2023-04-17",
-    "Statement": [{
-      "Sid": "AdminOnly",
-      "Effect": "Allow",
-      "Principal": { "SCW": "user_id:<YOUR_USER_ID>" },
-      "Action": ["s3:*"],
-      "Resource": ["laga-pulumi-state-admin", "laga-pulumi-state-admin/*"]
-    }]
-  }'
+scw object bucket create laga-pulumi-state-admin region=fr-par
 ```
 
 ### 1. Bootstrap (one-time)
@@ -58,28 +45,77 @@ aws s3api put-bucket-policy --bucket laga-pulumi-state-admin \
 ```bash
 cd deploy/bootstrap
 
-# Configure Pulumi to use the S3 state backend
-export AWS_ACCESS_KEY_ID=<admin-access-key>
-export AWS_SECRET_ACCESS_KEY=<admin-secret-key>
-export AWS_ENDPOINT_URL_S3=https://s3.fr-par.scw.cloud
-export AWS_REGION=fr-par
-
-pulumi login 's3://laga-pulumi-state-admin'
-
-# Configure Scaleway provider
+# Configure Scaleway provider (admin credentials)
 export SCW_ACCESS_KEY=<admin-access-key>
 export SCW_SECRET_KEY=<admin-secret-key>
 export SCW_ORGANIZATION_ID=<your-org-id>
 export SCW_DEFAULT_PROJECT_ID=<admin-project-id>
+
+# Configure Pulumi S3 backend credentials (same admin key)
+export AWS_ACCESS_KEY_ID=$SCW_ACCESS_KEY
+export AWS_SECRET_ACCESS_KEY=$SCW_SECRET_KEY
+
+# Set admin user ID (find with: scw iam user list)
+pulumi config set laga:adminUserId <your-user-id>
 
 pulumi up
 ```
 
 Note the outputs: `project_id`, `organization_id`, `access_key`, `secret_key`, `infra_bucket`.
 
+### 2. Infra (deploy key credentials)
+
+```bash
+cd deploy/infra
+
+# Configure Scaleway provider (deploy key from bootstrap outputs)
+export SCW_ACCESS_KEY=<deploy-access-key>
+export SCW_SECRET_KEY=<deploy-secret-key>
+export SCW_ORGANIZATION_ID=<org-id from bootstrap outputs>
+export SCW_DEFAULT_PROJECT_ID=<project-id from bootstrap outputs>
+
+# Configure Pulumi S3 backend credentials (same deploy key)
+export AWS_ACCESS_KEY_ID=$SCW_ACCESS_KEY
+export AWS_SECRET_ACCESS_KEY=$SCW_SECRET_KEY
+
+pulumi up
+```
+
+## Deploying a specific version
+
+```bash
+# Override image tag for one deployment
+pulumi up --config laga:imageTag=abc1234
+
+# Or persist the tag in config
+pulumi config set laga:imageTag abc1234
+pulumi up
+```
+
 ## Mise tasks
 
 ```bash
 mise bootstrap-preview   # Preview bootstrap stack changes
 mise bootstrap-up         # Apply bootstrap stack
+mise infra-preview        # Preview infra stack changes
+mise infra-up             # Apply infra stack
 ```
+
+## Rolling back
+
+```bash
+cd deploy/infra
+pulumi config set laga:imageTag <previous-sha>
+pulumi up
+```
+
+## Environment variables reference
+
+| Variable | Used By | Source |
+|----------|---------|--------|
+| `SCW_ACCESS_KEY` | Pulumi Scaleway provider | Admin key (bootstrap) / Deploy key (infra) |
+| `SCW_SECRET_KEY` | Pulumi Scaleway provider | Admin key (bootstrap) / Deploy key (infra) |
+| `SCW_ORGANIZATION_ID` | Pulumi Scaleway provider | From bootstrap outputs |
+| `SCW_DEFAULT_PROJECT_ID` | Pulumi Scaleway provider | Admin project (bootstrap) / laga project (infra) |
+| `AWS_ACCESS_KEY_ID` | Pulumi S3 backend | Admin key (bootstrap) / Deploy key (infra) |
+| `AWS_SECRET_ACCESS_KEY` | Pulumi S3 backend | Admin secret (bootstrap) / Deploy secret (infra) |
