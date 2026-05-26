@@ -34,6 +34,7 @@ runs:
         AWS_SECRET_KEY: ${{ inputs.secret-key }}
         SCW_ACCESS_KEY: ${{ inputs.access-key }}
         AWS_ACCESS_KEY: ${{ inputs.access-key }}
+        PULUMI_CONFIG_PASSPHRASE: ""
       run: |
         pulumi login 's3://laga-pulumi-state?endpoint=https://s3.fr-par.scw.cloud&region=fr-par'
         pulumi stack select prod

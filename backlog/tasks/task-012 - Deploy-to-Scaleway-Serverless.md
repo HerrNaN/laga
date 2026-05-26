@@ -1,10 +1,10 @@
 ---
 id: TASK-012
 title: Deploy to Scaleway Serverless
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-05-23 14:06'
-updated_date: '2026-05-24 09:04'
+updated_date: '2026-05-29 16:44'
 labels:
   - deploy
 dependencies: []
