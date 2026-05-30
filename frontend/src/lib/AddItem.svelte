@@ -29,7 +29,7 @@
     ></div>
     <section>
         <wa-input
-            placeholder="e.g. 2 kg potatoes"
+            placeholder="t.ex. 2 kg potatis"
             bind:this={input}
             onkeydown={handleKeydown}
         ></wa-input>
