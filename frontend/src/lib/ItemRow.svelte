@@ -66,7 +66,7 @@
         border-radius: var(--wa-border-width-l);
 
         &:has(wa-checkbox:state(checked)) {
-            background-color: var(--wa-color-neutral-fill-quiet);
+            background-color: var(--wa-color-neutral-fill-normal);
 
             & wa-checkbox::part(label) {
                 text-decoration: line-through;
