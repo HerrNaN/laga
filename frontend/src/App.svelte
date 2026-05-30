@@ -23,6 +23,7 @@
 
 <style>
     :global(body) {
+        --add-item-height: calc(var(--wa-space-m) * 2 + 3rem);
         margin: 0;
     }
 
@@ -36,6 +37,7 @@
     .list-area {
         flex: 1;
         overflow-y: auto;
+        padding-bottom: var(--add-item-height);
     }
 
     header {

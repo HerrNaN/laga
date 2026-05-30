@@ -37,6 +37,14 @@
 </div>
 
 <style>
+    .input-wrapper {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
+    }
+
     .backdrop {
         position: fixed;
         inset: 0;
@@ -51,9 +59,16 @@
         pointer-events: auto;
     }
 
+    wa-input {
+        width: 100%;
+    }
+
     section {
         position: relative;
-        padding: var(--wa-space-m);
+        height: var(--add-item-height);
+        padding: 0 var(--wa-space-m);
+        display: flex;
+        align-items: center;
         box-shadow: 0 var(--wa-shadow-offset-x-l) var(--wa-shadow-offset-y-l)
             var(--wa-color-shadow);
         background-color: var(--wa-color-surface-default);
