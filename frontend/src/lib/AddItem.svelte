@@ -29,6 +29,7 @@
     ></div>
     <section>
         <wa-input
+            enterkeyhint="go"
             placeholder="t.ex. 2 kg potatis"
             bind:this={input}
             onkeydown={handleKeydown}
