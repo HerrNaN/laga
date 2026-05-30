@@ -27,7 +27,7 @@
     }
 
     main {
-        height: 100vh;
+        height: 100dvh;
         display: flex;
         flex-direction: column;
         background-color: var(--wa-color-surface-default);
