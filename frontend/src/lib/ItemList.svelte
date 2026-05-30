@@ -83,7 +83,6 @@
         padding: 0 var(--wa-space-m);
         font-size: var(--wa-font-size-xs);
         text-transform: uppercase;
-        letter-spacing: 0.05em;
         color: var(--wa-color-neutral-on-normal);
     }
 
