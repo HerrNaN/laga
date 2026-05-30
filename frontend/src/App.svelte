@@ -40,6 +40,7 @@
 
     header {
         position: sticky;
+        top: 0;
         padding: var(--wa-space-m);
         border-bottom: var(--wa-border-width-s) var(--wa-border-style)
             var(--wa-color-surface-border);
