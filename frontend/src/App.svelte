@@ -42,6 +42,7 @@
     }
 
     header {
+        isolation: isolate;
         position: sticky;
         top: 0;
         padding: var(--wa-space-m);
