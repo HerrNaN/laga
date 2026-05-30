@@ -22,6 +22,8 @@
             items.deleteItem(item.id);
         }
     };
+
+    const id = $props.id();
 </script>
 
 <div
@@ -36,10 +38,15 @@
             </div>
         {/snippet}
 
-        <div class="content">
-            <wa-checkbox checked={item.checked} onchange={handleToggle}
-                >{item.text}</wa-checkbox
-            >
+        <div
+            class="content"
+            onclick={handleToggle}
+            role="checkbox"
+            aria-checked={item.checked}
+            tabindex="0"
+        >
+            <wa-checkbox {id} checked={item.checked}></wa-checkbox>
+            <label for={id}>{item.text}</label>
         </div>
     </SwipeAction>
 </div>
@@ -60,15 +67,14 @@
         width: 100%;
         height: 100%;
         display: flex;
+        gap: var(--wa-space-s);
         align-items: center;
-        padding-inline: var(--wa-space-s);
+        padding-inline: var(--wa-space-2xs);
         background-color: var(--wa-color-surface-default);
         border-radius: var(--wa-border-width-l);
 
         &:has(wa-checkbox:state(checked)) {
-            background-color: var(--wa-color-neutral-fill-normal);
-
-            & wa-checkbox::part(label) {
+            label {
                 text-decoration: line-through;
                 color: var(--wa-color-neutral-on-quiet);
             }
@@ -90,7 +96,22 @@
     }
 
     wa-checkbox {
-        width: 100%;
         -webkit-tap-highlight-color: transparent;
+        padding: 0.675rem;
+        border-radius: var(--wa-border-width-l);
+        background-color: var(--wa-color-neutral-fill-quiet);
+
+        &:state(checked) {
+            background-color: var(--wa-color-success-fill-quiet);
+            &::part(control) {
+                color: var(--wa-color-success-on-loud);
+                background-color: var(--wa-color-success-fill-loud);
+                border-color: var(--wa-color-success-fill-loud);
+            }
+        }
+
+        &::part(control) {
+            margin-inline-end: 0;
+        }
     }
 </style>
