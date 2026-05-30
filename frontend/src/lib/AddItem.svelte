@@ -69,8 +69,6 @@
         padding: 0 var(--wa-space-m);
         display: flex;
         align-items: center;
-        box-shadow: 0 var(--wa-shadow-offset-x-l) var(--wa-shadow-offset-y-l)
-            var(--wa-color-shadow);
-        background-color: var(--wa-color-surface-default);
+        background-color: var(--wa-color-surface-raised);
     }
 </style>

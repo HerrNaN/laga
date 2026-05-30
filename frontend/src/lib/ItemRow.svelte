@@ -63,10 +63,10 @@
         align-items: center;
         padding-inline: var(--wa-space-s);
         background-color: var(--wa-color-surface-default);
-        border-color: var(--wa-color-neutral-border-normal);
+        /*border-color: var(--wa-color-neutral-border-normal);*/
         border-radius: var(--wa-border-width-l);
-        border-style: var(--wa-border-style);
-        border-width: var(--wa-border-width-s);
+        /*border-style: var(--wa-border-style);
+        border-width: var(--wa-border-width-s);*/
 
         &:has(wa-checkbox:state(checked)) {
             background-color: var(--wa-color-neutral-fill-quiet);
