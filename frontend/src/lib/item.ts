@@ -3,4 +3,5 @@ export type Item = {
   text: string;
   checked: boolean;
   createdAt: Date;
+  department?: string;
 };

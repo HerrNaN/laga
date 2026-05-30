@@ -2,6 +2,7 @@
     import { items } from "../stores";
     import type { Item } from "./item";
     import ItemRow from "./ItemRow.svelte";
+    import { departmentOrder, getDepartment } from "./classifier";
     import "@awesome.me/webawesome/dist/components/button/button.js";
 
     interface Props {
@@ -10,17 +11,24 @@
 
     let { items: itemList }: Props = $props();
 
-    const uncheckedItems = $derived(itemList.filter((item) => !item.checked));
     const checkedItems = $derived(itemList.filter((item) => item.checked));
 </script>
 
-<ul>
-    {#each uncheckedItems as item (item.id)}
-        <li>
-            <ItemRow {item} />
-        </li>
-    {/each}
-</ul>
+{#each departmentOrder as deptId (deptId)}
+    {@const deptItems = itemList.filter(
+        (item) => !item.checked && (item.department ?? "other") === deptId,
+    )}
+    {#if deptItems.length > 0}
+        <h2>{getDepartment(deptId).name}</h2>
+        <ul>
+            {#each deptItems as item (item.id)}
+                <li>
+                    <ItemRow {item} />
+                </li>
+            {/each}
+        </ul>
+    {/if}
+{/each}
 
 {#if checkedItems.length > 0}
     <div class="checked-section">

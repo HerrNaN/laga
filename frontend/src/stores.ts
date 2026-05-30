@@ -1,6 +1,7 @@
 import { writable } from "svelte/store";
 import type { Item } from "./lib/item";
 import { setItems } from "./db";
+import { classify, departments } from "./lib/classifier";
 
 const createItemID = () =>
   `${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -24,11 +25,13 @@ const createItemsStore = () => {
       loaded = true;
     },
     addItem: (text: string) => {
+      const { id: department } = classify(text, departments);
       const item: Item = {
         id: createItemID(),
         text,
         checked: false,
         createdAt: new Date(),
+        department,
       };
       update((items) => [...items, item]);
     },
