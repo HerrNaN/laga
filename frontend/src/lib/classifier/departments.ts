@@ -116,6 +116,7 @@ export const departments: Department[] = [
       "salladsmix",
       "sköljd sallad",
       "babyspenat",
+      "sparris",
     ],
   },
   {
@@ -181,6 +182,7 @@ export const departments: Department[] = [
       "äggkartong",
       "färsk mjölk",
       "hållbar mjölk",
+      "burrata",
     ],
   },
   {
@@ -424,6 +426,8 @@ export const departments: Department[] = [
       "svarta bönor",
       "majs konserverad",
       "tonfisk på burk",
+      "tonfisk i burk",
+      "burktonfisk",
       "makrill i tomatsås",
       "sardiner",
       "ansjovis",
@@ -464,6 +468,12 @@ export const departments: Department[] = [
       "kakao",
       "havrefras",
       "havrekuddar",
+      "ananas på burk",
+      "ananas i burk",
+      "burkananas",
+      "på burk",
+      "i burk",
+      "inlagd",
     ],
   },
   {
