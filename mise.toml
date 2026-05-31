@@ -44,11 +44,11 @@ dir = "frontend"
 run = "pnpm run build"
 
 [tasks.build]
-depends = ["build-fe"]
 description = "Build Go backend binary"
+depends = ["build-fe"]
 dir = "backend"
-env.CGO_ENABLED = "0"
 run = "go build ."
+env.CGO_ENABLED = "0"
 
 [tasks.backlog-web]
 run = "backlog-bun browser"
