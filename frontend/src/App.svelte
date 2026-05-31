@@ -25,9 +25,12 @@
     :global(body) {
         --add-item-height: calc(var(--wa-space-m) * 2 + 3rem);
         margin: 0;
+        overflow: hidden;
     }
 
     main {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         height: 100dvh;
         display: flex;
         flex-direction: column;
