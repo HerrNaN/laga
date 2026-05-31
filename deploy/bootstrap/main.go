@@ -70,49 +70,6 @@ func main() {
 			return err
 		}
 
-		// policyJson, ok := pulumi.All(app.ID(), infraBucket.Name).ApplyT(func(args []interface{}) (string, error) {
-		// 	appId := args[0].(string)
-		// 	bucketName := args[1].(string)
-
-		// 	p := bucketPolicy{
-		// 		Version: "2023-04-17",
-		// 		Statement: []bucketPolicyStatement{
-		// 			{
-		// 				Effect: "Allow",
-		// 				Principal: struct {
-		// 					SCW string `json:"SCW"`
-		// 				}{SCW: fmt.Sprintf("user_id:%s", adminUserId)},
-		// 				Action:   []string{"s3:*"},
-		// 				Resource: []string{bucketName, fmt.Sprintf("%s/*", bucketName)},
-		// 			},
-		// 			{
-		// 				Effect: "Allow",
-		// 				Principal: struct {
-		// 					SCW string `json:"SCW"`
-		// 				}{SCW: fmt.Sprintf("application_id:%s", appId)},
-		// 				Action:   []string{"s3:*"},
-		// 				Resource: []string{bucketName, fmt.Sprintf("%s/*", bucketName)},
-		// 			},
-		// 		},
-		// 	}
-
-		// 	b, err := json.Marshal(p)
-		// 	if err != nil {
-		// 		return "", err
-		// 	}
-		// 	return string(b), nil
-		// }).(pulumi.StringOutput)
-
-		// _, err = object.NewBucketPolicy(ctx, "laga-pulumi-state-policy", &object.BucketPolicyArgs{
-		// 	Bucket:    infraBucket.ID(),
-		// 	Policy:    policyJson,
-		// 	ProjectId: project.ID(),
-		// 	Region:    pulumi.String(region),
-		// })
-		// if err != nil {
-		// 	return err
-		// }
-
 		ctx.Export("project_id", project.ID())
 		ctx.Export("organization_id", app.OrganizationId)
 		ctx.Export("access_key", apiKey.AccessKey)
