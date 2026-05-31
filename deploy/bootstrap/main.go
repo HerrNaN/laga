@@ -7,20 +7,6 @@ import (
 	"github.com/pulumiverse/pulumi-scaleway/sdk/go/scaleway/object"
 )
 
-type bucketPolicyStatement struct {
-	Effect    string `json:"Effect"`
-	Principal struct {
-		SCW string `json:"SCW"`
-	} `json:"Principal"`
-	Action   []string `json:"Action"`
-	Resource []string `json:"Resource"`
-}
-
-type bucketPolicy struct {
-	Version   string                  `json:"Version"`
-	Statement []bucketPolicyStatement `json:"Statement"`
-}
-
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		region, ok := ctx.GetConfig("scaleway:region")

@@ -44,7 +44,7 @@ func main() {
 			return err
 		}
 
-		ctx.Export("url", pulumi.Sprintf("https://%s", container.DomainName))
+		ctx.Export("url", pulumi.Sprintf("https://%s", container.PublicEndpoint))
 		return nil
 	})
 }
