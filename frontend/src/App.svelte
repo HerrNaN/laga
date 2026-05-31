@@ -8,6 +8,7 @@
     onMount(async () => {
         const dbItems = await getAllItems();
         items.hydrate(dbItems);
+        window.scrollTo({ top: 0 });
     });
 </script>
 
