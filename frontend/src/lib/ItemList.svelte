@@ -42,7 +42,7 @@
 {#if checkedItems.length > 0}
     <div class="checked-section">
         <h2>
-            Checked
+            Handlat
             <wa-button
                 size="s"
                 variant="brand"
