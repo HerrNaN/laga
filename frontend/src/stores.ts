@@ -29,7 +29,6 @@ const createItemsStore = () => {
       const item: Item = {
         id: createItemID(),
         text,
-        checked: false,
         createdAt: new Date(),
         department,
       };
@@ -38,7 +37,13 @@ const createItemsStore = () => {
     toggleItem: (id: string) => {
       update((items) =>
         items.map((item) =>
-          item.id === id ? { ...item, checked: !item.checked } : item,
+          item.id === id
+            ? {
+                ...item,
+                checkedAt:
+                  item.checkedAt !== undefined ? undefined : new Date(),
+              }
+            : item,
         ),
       );
     },
@@ -46,7 +51,7 @@ const createItemsStore = () => {
       update((items) => items.filter((item) => item.id !== id));
     },
     deleteCheckedItems: () => {
-      update((items) => items.filter((item) => !item.checked));
+      update((items) => items.filter((item) => item.checkedAt === undefined));
     },
   };
 };

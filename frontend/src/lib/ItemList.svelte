@@ -11,12 +11,21 @@
 
     let { items: itemList }: Props = $props();
 
-    const checkedItems = $derived(itemList.filter((item) => item.checked));
+    const checkedItems = $derived(
+        itemList
+            .filter(
+                (item): item is Item & { checkedAt: Date } =>
+                    item.checkedAt !== undefined,
+            )
+            .sort((a, b) => b.checkedAt.getTime() - a.checkedAt.getTime()),
+    );
 </script>
 
 {#each departmentOrder as deptId (deptId)}
     {@const deptItems = itemList.filter(
-        (item) => !item.checked && (item.department ?? "other") === deptId,
+        (item) =>
+            item.checkedAt === undefined &&
+            (item.department ?? "other") === deptId,
     )}
     {#if deptItems.length > 0}
         <h2>{getDepartment(deptId).name}</h2>

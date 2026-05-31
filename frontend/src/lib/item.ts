@@ -1,7 +1,7 @@
 export type Item = {
   id: string;
   text: string;
-  checked: boolean;
+  checkedAt?: Date;
   createdAt: Date;
   department?: string;
 };

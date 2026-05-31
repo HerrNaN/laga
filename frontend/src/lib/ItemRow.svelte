@@ -11,6 +11,8 @@
 
     let { item }: Props = $props();
 
+    const checked = $derived(item.checkedAt !== undefined);
+
     let isRemoving = $state(false);
 
     const handleToggle = () => {
@@ -42,10 +44,10 @@
             class="content"
             onclick={handleToggle}
             role="checkbox"
-            aria-checked={item.checked}
+            aria-checked={checked}
             tabindex="0"
         >
-            <wa-checkbox {id} checked={item.checked}></wa-checkbox>
+            <wa-checkbox {id} {checked}></wa-checkbox>
             <label for={id}>{item.text}</label>
         </div>
     </SwipeAction>
