@@ -1,19 +1,24 @@
 [tools]
+# Misc.
+pulumi = "latest"
 "github:MrLesk/Backlog.md" = "latest"
-go = "1.26"
 hk = "latest"
-node = "24"
 pkl = "latest"
-java = "24"
-pnpm = "11"
+java = "24"  # Needed for pkl language server
+
+# Golang
+go = "1.26"
 gofumpt = "latest"
 "go:golang.org/x/tools/cmd/goimports" = "latest"
 "go:golang.org/x/vuln/cmd/govulncheck" = "latest"
 "github:golangci/golines" = "latest"
 "github:securego/gosec" = "latest"
 golangci-lint = "latest"
+
+# Web
+node = "24"
+pnpm = "11"
 oxlint = "latest"
-pulumi = "latest"
 
 [shell_alias]
 backlog = "backlog-bun"
