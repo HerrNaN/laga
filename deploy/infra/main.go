@@ -27,18 +27,19 @@ func main() {
 		}
 
 		container, err := containers.NewContainer(ctx, "laga", &containers.ContainerArgs{
-			Name:             pulumi.String("laga"),
-			NamespaceId:      ns.ID(),
-			Image:            pulumi.Sprintf("ghcr.io/herrnan/laga:%s", imageTag),
-			Port:             pulumi.Int(8080),
-			Protocol:         pulumi.String("http1"),
-			CpuLimit:         pulumi.Int(128),
-			MemoryLimitBytes: pulumi.Int(128 * 1024 * 1024),
-			MinScale:         pulumi.Int(0),
-			MaxScale:         pulumi.Int(1),
-			Timeout:          pulumi.Int(5),
-			Privacy:          pulumi.String("public"),
-			Region:           pulumi.String(region),
+			Name:                 pulumi.String("laga"),
+			NamespaceId:          ns.ID(),
+			Image:                pulumi.Sprintf("ghcr.io/herrnan/laga:%s", imageTag),
+			Port:                 pulumi.Int(8080),
+			Protocol:             pulumi.String("http1"),
+			CpuLimit:             pulumi.Int(128),
+			MemoryLimitBytes:     pulumi.Int(128 * 1024 * 1024),
+			HttpsConnectionsOnly: pulumi.Bool(true),
+			MinScale:             pulumi.Int(0),
+			MaxScale:             pulumi.Int(1),
+			Timeout:              pulumi.Int(5),
+			Privacy:              pulumi.String("public"),
+			Region:               pulumi.String(region),
 		})
 		if err != nil {
 			return err
