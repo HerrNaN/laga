@@ -1,4 +1,3 @@
 dist/
 
-# Binary output
-laga
+cmd/laga/laga

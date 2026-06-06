@@ -31,8 +31,9 @@ run = "pnpm dev"
 [tasks.dev-be]
 description = "Run backend with Vite proxy (VITE_DEV_PROXY must be set)"
 dir = "backend"
-run = "go run ."
-env.VITE_DEV_PROXY = "http://localhost:5173"
+run = "go run ./cmd/laga"
+env.EXTERNAL_WEB_SERVER_ADDRESS = "http://localhost:5173"
+env.PORT = 8080
 
 [tasks.dev]
 description = "Run backend and frontend in parallel"
@@ -46,9 +47,9 @@ run = "pnpm run build"
 [tasks.build]
 description = "Build Go backend binary"
 depends = ["build-fe"]
-dir = "backend"
+dir = "backend/cmd/laga"
 run = "go build ."
-env.CGO_ENABLED = "0"
+env.CGO_ENABLED = 0
 
 [tasks.backlog-web]
 run = "backlog-bun browser"

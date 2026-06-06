@@ -1,5 +1,5 @@
 FROM scratch
 
-COPY ./backend/laga /laga
+COPY ./backend/cmd/laga/laga /laga
 
 ENTRYPOINT [ "/laga" ]

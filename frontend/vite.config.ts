@@ -5,7 +5,7 @@ import { VitePWA } from "vite-plugin-pwa";
 // https://vite.dev/config/
 export default defineConfig({
   build: {
-    outDir: "../backend/dist",
+    outDir: "../backend/internal/app/web/dist",
     emptyOutDir: true,
   },
   plugins: [
