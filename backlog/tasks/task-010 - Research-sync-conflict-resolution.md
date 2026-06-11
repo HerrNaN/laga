@@ -4,6 +4,7 @@ title: Research sync conflict resolution
 status: To Do
 assignee: []
 created_date: '2026-05-15 08:52'
+updated_date: '2026-06-11 19:17'
 labels: []
 dependencies: []
 ordinal: 10000
@@ -21,3 +22,12 @@ Research and document strategies for handling offline-to-online synchronization 
 - [ ] #2 Recommendation for v2 implementation is clear
 - [ ] #3 Trade-offs are well understood
 <!-- AC:END -->
+
+## Comments
+
+<!-- COMMENTS:BEGIN -->
+created: 2026-06-11 19:17
+---
+Superseded by TASK-018 — Yjs/CRDT chosen as the sync strategy during grill-me session; no further research needed
+---
+<!-- COMMENTS:END -->
