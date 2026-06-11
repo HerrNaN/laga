@@ -12,7 +12,7 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-func Run(ctx context.Context, logger *slog.Logger, cfg Config) error {
+func Run(ctx context.Context, log *slog.Logger, cfg Config) error {
 	eg, ctx := errgroup.WithContext(ctx)
 
 	mux := http.NewServeMux()
@@ -23,7 +23,7 @@ func Run(ctx context.Context, logger *slog.Logger, cfg Config) error {
 			return fmt.Errorf("create web server proxy: %w", err)
 		}
 
-		slog.Info("Running against external web server", "external_web_server_address", cfg.ExternalWebServerAddress)
+		log.Info("Running against external web server", "external_web_server_address", cfg.ExternalWebServerAddress)
 		mux.HandleFunc("/", serveWeb)
 	} else {
 		serveWeb, err := web.ServeStatic()
@@ -40,7 +40,7 @@ func Run(ctx context.Context, logger *slog.Logger, cfg Config) error {
 	}
 
 	eg.Go(func() error {
-		slog.Info("Server starting", "address", server.Addr)
+		log.Info("Server starting", "address", server.Addr)
 
 		err := util.ListenAndServe(ctx, server, time.Second*10)
 		if err != nil {
