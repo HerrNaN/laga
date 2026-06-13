@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { items } from "../stores";
-    import type { Item } from "./item";
+    import { items } from "./store";
+    import type { Item } from "./list";
     import SwipeAction from "./SwipeAction.svelte";
     import "@awesome.me/webawesome/dist/components/checkbox/checkbox.js";
     import "@awesome.me/webawesome/dist/components/icon/icon.js";

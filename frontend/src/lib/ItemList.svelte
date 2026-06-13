@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { items } from "../stores";
-    import type { Item } from "./item";
+    import { items } from "./store";
+    import type { Item } from "./list";
     import ItemRow from "./ItemRow.svelte";
     import { departmentOrder, getDepartment } from "./classifier";
     import "@awesome.me/webawesome/dist/components/button/button.js";

@@ -1,13 +1,10 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { items } from "./stores";
-    import { getAllItems } from "./db";
+    import { items } from "./lib/store";
     import AddItem from "./lib/AddItem.svelte";
     import ItemList from "./lib/ItemList.svelte";
 
-    onMount(async () => {
-        const dbItems = await getAllItems();
-        items.hydrate(dbItems);
+    onMount(() => {
         setTimeout(() => (document.body.style.height = "100dvh"), 10);
     });
 </script>

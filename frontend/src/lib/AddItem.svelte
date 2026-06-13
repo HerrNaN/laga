@@ -1,6 +1,6 @@
 <script lang="ts">
     import WaInput from "@awesome.me/webawesome/dist/components/input/input.js";
-    import { items } from "../stores";
+    import { items } from "./store";
 
     let input = $state<WaInput>();
 
