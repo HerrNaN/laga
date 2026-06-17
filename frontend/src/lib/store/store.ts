@@ -87,7 +87,11 @@ export const createItemsStore = async (deps: {
     registryLists
       .keys()
       .filter((id) => id !== activeListId)
-      .map((id) => loadListDoc(id).catch(console.warn)),
+      .map((id) =>
+        loadListDoc(id).catch((reason) =>
+          console.warn("failed to load list doc:", reason),
+        ),
+      ),
   );
 
   // ── Active doc accessors ────────────────────────────────
