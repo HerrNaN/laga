@@ -4,6 +4,7 @@ pulumi = "latest"
 "github:MrLesk/Backlog.md" = "latest"
 hk = "latest"
 pkl = "latest"
+gh = "latest"
 # Needed for pkl language server
 java = "24"
 
