@@ -35,8 +35,9 @@ func Run(ctx context.Context, log *slog.Logger, cfg Config) error {
 	}
 
 	server := &http.Server{
-		Handler: http.MaxBytesHandler(mux, 1<<20 /* 1mb */),
-		Addr:    fmt.Sprintf(":%d", cfg.Port),
+		Handler:           http.MaxBytesHandler(mux, 1<<20 /* 1mb */),
+		Addr:              fmt.Sprintf(":%d", cfg.Port),
+		ReadHeaderTimeout: 1 * time.Second,
 	}
 
 	eg.Go(func() error {
