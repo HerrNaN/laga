@@ -8,43 +8,36 @@ backend = "github:MrLesk/Backlog.md"
 checksum = "sha256:1ab7fce1cf950bb492ce018c420024626e18de446610585ed07375cd2416cccf"
 url = "https://github.com/MrLesk/Backlog.md/releases/download/v1.45.1/backlog-bun-linux-arm64"
 url_api = "https://api.github.com/repos/MrLesk/Backlog.md/releases/assets/414724443"
-github_attestations = "unavailable"
 
 [tools."github:MrLesk/Backlog.md"."platforms.linux-arm64-musl"]
 checksum = "sha256:1ab7fce1cf950bb492ce018c420024626e18de446610585ed07375cd2416cccf"
 url = "https://github.com/MrLesk/Backlog.md/releases/download/v1.45.1/backlog-bun-linux-arm64"
 url_api = "https://api.github.com/repos/MrLesk/Backlog.md/releases/assets/414724443"
-github_attestations = "unavailable"
 
 [tools."github:MrLesk/Backlog.md"."platforms.linux-x64"]
 checksum = "sha256:c34f9eef4e214b9e41b552776c6bcb33082c2a4c04124f4c44160ae2a8999d4b"
 url = "https://github.com/MrLesk/Backlog.md/releases/download/v1.45.1/backlog-bun-linux-x64-baseline"
 url_api = "https://api.github.com/repos/MrLesk/Backlog.md/releases/assets/414724445"
-github_attestations = "unavailable"
 
 [tools."github:MrLesk/Backlog.md"."platforms.linux-x64-musl"]
 checksum = "sha256:c34f9eef4e214b9e41b552776c6bcb33082c2a4c04124f4c44160ae2a8999d4b"
 url = "https://github.com/MrLesk/Backlog.md/releases/download/v1.45.1/backlog-bun-linux-x64-baseline"
 url_api = "https://api.github.com/repos/MrLesk/Backlog.md/releases/assets/414724445"
-github_attestations = "unavailable"
 
 [tools."github:MrLesk/Backlog.md"."platforms.macos-arm64"]
 checksum = "sha256:4f639ff1a3c5269f5459b7de7afb6bac483c2609a1aeaf4016caaa0f8c68df64"
 url = "https://github.com/MrLesk/Backlog.md/releases/download/v1.45.1/backlog-bun-darwin-arm64"
 url_api = "https://api.github.com/repos/MrLesk/Backlog.md/releases/assets/414724444"
-github_attestations = "unavailable"
 
 [tools."github:MrLesk/Backlog.md"."platforms.macos-x64"]
 checksum = "sha256:a6f90fee890ce3d4c93b4cba43892490e7add63f4332993518ec92050f8755fd"
 url = "https://github.com/MrLesk/Backlog.md/releases/download/v1.45.1/backlog-bun-darwin-x64"
 url_api = "https://api.github.com/repos/MrLesk/Backlog.md/releases/assets/414724447"
-github_attestations = "unavailable"
 
 [tools."github:MrLesk/Backlog.md"."platforms.windows-x64"]
 checksum = "sha256:6028b680deb6879e1b14db243e95404966700bb6d2286bf70ce5b18882b8d6dc"
 url = "https://github.com/MrLesk/Backlog.md/releases/download/v1.45.1/backlog-bun-windows-x64-baseline.exe"
 url_api = "https://api.github.com/repos/MrLesk/Backlog.md/releases/assets/414724446"
-github_attestations = "unavailable"
 
 [[tools."github:golangci/golines"]]
 version = "0.15.0"
@@ -54,43 +47,36 @@ backend = "github:golangci/golines"
 checksum = "sha256:bfc1f7fde010a8213392d0d8743573dcecaa968014e83ba32657a9032ce9e9e9"
 url = "https://github.com/golangci/golines/releases/download/v0.15.0/golines-0.15.0-linux-arm64.tar.gz"
 url_api = "https://api.github.com/repos/golangci/golines/releases/assets/353818403"
-github_attestations = "unavailable"
 
 [tools."github:golangci/golines"."platforms.linux-arm64-musl"]
 checksum = "sha256:bfc1f7fde010a8213392d0d8743573dcecaa968014e83ba32657a9032ce9e9e9"
 url = "https://github.com/golangci/golines/releases/download/v0.15.0/golines-0.15.0-linux-arm64.tar.gz"
 url_api = "https://api.github.com/repos/golangci/golines/releases/assets/353818403"
-github_attestations = "unavailable"
 
 [tools."github:golangci/golines"."platforms.linux-x64"]
 checksum = "sha256:c350dbe819d68415039cbbd8c24d4e99367dad36c916fe57c12077030517f8fa"
 url = "https://github.com/golangci/golines/releases/download/v0.15.0/golines-0.15.0-linux-amd64.tar.gz"
 url_api = "https://api.github.com/repos/golangci/golines/releases/assets/353818404"
-github_attestations = "unavailable"
 
 [tools."github:golangci/golines"."platforms.linux-x64-musl"]
 checksum = "sha256:c350dbe819d68415039cbbd8c24d4e99367dad36c916fe57c12077030517f8fa"
 url = "https://github.com/golangci/golines/releases/download/v0.15.0/golines-0.15.0-linux-amd64.tar.gz"
 url_api = "https://api.github.com/repos/golangci/golines/releases/assets/353818404"
-github_attestations = "unavailable"
 
 [tools."github:golangci/golines"."platforms.macos-arm64"]
 checksum = "sha256:ec0d1b2298552695eeac87cbcbe1dd9d533a4a986a5af791a7486b0ddb65e525"
 url = "https://github.com/golangci/golines/releases/download/v0.15.0/golines-0.15.0-darwin-all.tar.gz"
 url_api = "https://api.github.com/repos/golangci/golines/releases/assets/353818408"
-github_attestations = "unavailable"
 
 [tools."github:golangci/golines"."platforms.macos-x64"]
 checksum = "sha256:ec0d1b2298552695eeac87cbcbe1dd9d533a4a986a5af791a7486b0ddb65e525"
 url = "https://github.com/golangci/golines/releases/download/v0.15.0/golines-0.15.0-darwin-all.tar.gz"
 url_api = "https://api.github.com/repos/golangci/golines/releases/assets/353818408"
-github_attestations = "unavailable"
 
 [tools."github:golangci/golines"."platforms.windows-x64"]
 checksum = "sha256:9885510d26a7f75dcae204e12d28f3162dd80a3084fa2a47e818b43a7adc1018"
 url = "https://github.com/golangci/golines/releases/download/v0.15.0/golines-0.15.0-windows-amd64.zip"
 url_api = "https://api.github.com/repos/golangci/golines/releases/assets/353818406"
-github_attestations = "unavailable"
 
 [[tools."github:securego/gosec"]]
 version = "2.26.1"
@@ -100,43 +86,36 @@ backend = "github:securego/gosec"
 checksum = "sha256:86e98ccb6518ab17fd0d1c795a24f70c60cfd724c9688a72ae2c3e63fbb3b671"
 url = "https://github.com/securego/gosec/releases/download/v2.26.1/gosec_2.26.1_linux_arm64.tar.gz"
 url_api = "https://api.github.com/repos/securego/gosec/releases/assets/407182876"
-github_attestations = "unavailable"
 
 [tools."github:securego/gosec"."platforms.linux-arm64-musl"]
 checksum = "sha256:86e98ccb6518ab17fd0d1c795a24f70c60cfd724c9688a72ae2c3e63fbb3b671"
 url = "https://github.com/securego/gosec/releases/download/v2.26.1/gosec_2.26.1_linux_arm64.tar.gz"
 url_api = "https://api.github.com/repos/securego/gosec/releases/assets/407182876"
-github_attestations = "unavailable"
 
 [tools."github:securego/gosec"."platforms.linux-x64"]
 checksum = "sha256:665f48c10b10251ab70ef06635c8522900e6d25b0e6902931a697af2f7646360"
 url = "https://github.com/securego/gosec/releases/download/v2.26.1/gosec_2.26.1_linux_amd64.tar.gz"
 url_api = "https://api.github.com/repos/securego/gosec/releases/assets/407182873"
-github_attestations = "unavailable"
 
 [tools."github:securego/gosec"."platforms.linux-x64-musl"]
 checksum = "sha256:665f48c10b10251ab70ef06635c8522900e6d25b0e6902931a697af2f7646360"
 url = "https://github.com/securego/gosec/releases/download/v2.26.1/gosec_2.26.1_linux_amd64.tar.gz"
 url_api = "https://api.github.com/repos/securego/gosec/releases/assets/407182873"
-github_attestations = "unavailable"
 
 [tools."github:securego/gosec"."platforms.macos-arm64"]
 checksum = "sha256:2d10709ab4b85f0ae6f4d74b0041ff074e91ec134500e4f3910a3f1ba0056498"
 url = "https://github.com/securego/gosec/releases/download/v2.26.1/gosec_2.26.1_darwin_arm64.tar.gz"
 url_api = "https://api.github.com/repos/securego/gosec/releases/assets/407182874"
-github_attestations = "unavailable"
 
 [tools."github:securego/gosec"."platforms.macos-x64"]
 checksum = "sha256:0220d7e7887b85846119d239f32ce262eea0110b5a64c59cc6822ec46da141b6"
 url = "https://github.com/securego/gosec/releases/download/v2.26.1/gosec_2.26.1_darwin_amd64.tar.gz"
 url_api = "https://api.github.com/repos/securego/gosec/releases/assets/407182875"
-github_attestations = "unavailable"
 
 [tools."github:securego/gosec"."platforms.windows-x64"]
 checksum = "sha256:47b211886ff1215a970aa875bcc72e9c2870b558cbe09cdefd845e712f2bba6f"
 url = "https://github.com/securego/gosec/releases/download/v2.26.1/gosec_2.26.1_windows_amd64.tar.gz"
 url_api = "https://api.github.com/repos/securego/gosec/releases/assets/407182906"
-github_attestations = "unavailable"
 
 [[tools.go]]
 version = "1.26.4"
@@ -280,6 +259,9 @@ url = "https://github.com/jdx/hk/releases/download/v1.45.0/hk-x86_64-pc-windows-
 [[tools.java]]
 version = "24.0.2"
 backend = "core:java"
+
+[tools.java.options]
+shorthand_vendor = "openjdk"
 
 [tools.java."platforms.linux-arm64"]
 checksum = "sha256:1c2164216387c2f5cbacc7e96ecaa51168d954ac3805312b0a7d4d1e2726f58a"
