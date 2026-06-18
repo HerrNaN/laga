@@ -4,7 +4,7 @@ pulumi = "latest"
 "github:MrLesk/Backlog.md" = "latest"
 hk = "latest"
 pkl = "latest"
-java = "24"  # Needed for pkl language server
+java = "24"                           # Needed for pkl language server
 
 # Golang
 go = "1.26"
@@ -23,43 +23,47 @@ oxlint = "latest"
 [shell_alias]
 backlog = "backlog-bun"
 
+# === Development ===
+
+[tasks.dev]
+description = "Run in development mode"
+depends = ["dev-fe", "dev-be"]
+
 [tasks.dev-fe]
-description = "Run Vite dev server (backend proxies to this)"
 dir = "frontend"
 run = "pnpm dev"
+hide = true
 
 [tasks.dev-be]
-description = "Run backend with Vite proxy (VITE_DEV_PROXY must be set)"
 dir = "backend"
 run = "go run ./cmd/laga"
 env.EXTERNAL_WEB_SERVER_ADDRESS = "http://localhost:5173"
 env.PORT = 8080
+hide = true
 
-[tasks.dev]
-description = "Run backend and frontend in parallel"
-depends = ["dev-fe", "dev-be"]
-
-[tasks.build-fe]
-description = "Build frontend for production"
-dir = "frontend"
-run = "pnpm run build"
+# === Building ===
 
 [tasks.build]
-description = "Build Go backend binary"
 depends = ["build-fe"]
 dir = "backend/cmd/laga"
 run = "go build ."
 env.CGO_ENABLED = 0
+hide = true
+
+[tasks.build-fe]
+dir = "frontend"
+run = "pnpm run build"
+hide = true
+
+[tasks.preview]
+description = "Preview build for production"
+depends = ["build-fe"]
+dir = "backend/cmd/laga"
+run = "go run ."
+env.PORT = 9090
+
+# === Backlog ===
 
 [tasks.backlog-web]
+description = "Run backlog web UI"
 run = "backlog-bun browser"
-
-[tasks.bootstrap-preview]
-description = "Preview Pulumi bootstrap stack changes"
-dir = "deploy/bootstrap"
-run = "pulumi preview"
-
-[tasks.bootstrap-up]
-description = "Apply Pulumi bootstrap stack"
-dir = "deploy/bootstrap"
-run = "pulumi up"
