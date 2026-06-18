@@ -17,8 +17,7 @@ local linters = new Mapping<String, Step> {
     check = "cd {{workspace}} && gosec -quiet ./..."
   }
   ["go-vet"] = Builtins.go_vet
-  ["go-vuln-check"] = Builtins.go_vuln_check
-  ["golangci-lint"] = Builtins.golangci_lint
+  ["go-golangci-lint"] = Builtins.golangci_lint
   ["go-mod-tidy"] = (Builtins.gomod_tidy) {
     workspace_indicator = "go.mod"
     check_diff = "cd {{workspace}} && go mod tidy -diff"
@@ -29,7 +28,15 @@ local linters = new Mapping<String, Step> {
   ["mise"] = Builtins.mise
 
   // Web
-  ["oxlint"] = Builtins.ox_lint
+  ["web-oxlint"] = Builtins.ox_lint
+  ["web-unit-tests"] {
+    check = "pnpm test --run"
+    dir = "frontend"
+  }
+}
+
+local audit = new Mapping<String, Step> {
+  ["go-vuln-check"] = Builtins.go_vuln_check
 }
 
 hooks {
@@ -39,5 +46,8 @@ hooks {
   }
   ["check"] {
     steps = linters
+  }
+  ["audit"] {
+    steps = audit
   }
 }
