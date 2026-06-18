@@ -118,7 +118,7 @@ print_section() {
   fi
 }
 
-echo "## v${major}.${minor}.${patch}"
+echo "v${major}.${minor}.${patch}"
 echo
 print_section "Breaking Changes" "${breaking[@]}"
 print_section "Features" "${features[@]}"
