@@ -1,4 +1,5 @@
 # Frontend
+- **Use `pnpm`, NEVER `npm`**
 - **Prefer arrow syntx functions:**
   - DO: `const f = () => { ... }`
   - DONT: `function f() { ... }`
