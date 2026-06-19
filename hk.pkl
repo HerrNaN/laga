@@ -33,6 +33,10 @@ local linters = new Mapping<String, Step> {
     check = "pnpm test --run"
     dir = "frontend"
   }
+  ["web-check"] {
+    check = "pnpm check"
+    dir = "frontend"
+  }
 }
 
 local audit = new Mapping<String, Step> {
