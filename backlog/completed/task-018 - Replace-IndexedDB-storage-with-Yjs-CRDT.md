@@ -1,17 +1,17 @@
 ---
 id: TASK-018
 title: Replace IndexedDB storage with Yjs CRDT
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-06-11 19:15'
-updated_date: '2026-06-11 19:16'
+updated_date: '2026-06-19 05:19'
 labels: []
 dependencies: []
 references:
   - TASK-009
   - TASK-010
 priority: high
-ordinal: 18000
+ordinal: 1000
 ---
 
 ## Description
