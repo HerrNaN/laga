@@ -1,15 +1,11 @@
 <script lang="ts">
-    import { onMount } from "svelte";
     import { items } from "./lib/store";
     import AddItem from "./lib/AddItem.svelte";
     import ItemList from "./lib/ItemList.svelte";
-
-    onMount(() => {
-        setTimeout(() => (document.body.style.height = "100dvh"), 10);
-    });
+    import { pwaHack } from "./lib/utils/pwa-hack";
 </script>
 
-<main>
+<main {@attach pwaHack("100dvh")}>
     <header>
         <h1>Inköpslista</h1>
     </header>
