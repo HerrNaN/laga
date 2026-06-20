@@ -1,5 +1,5 @@
 import { createItemsStore } from "./store";
-import { LoroPersistence } from "./persistence";
+import { LoroPersistence } from "../../loro/persistence";
 
 const persistence = new LoroPersistence();
 export const items = await createItemsStore({
