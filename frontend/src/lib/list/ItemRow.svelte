@@ -47,7 +47,7 @@
             aria-checked={checked}
             tabindex="0"
         >
-            <wa-checkbox {id} {checked}></wa-checkbox>
+            <wa-checkbox {id} defaultChecked={checked}></wa-checkbox>
             <label for={id}>{item.text}</label>
         </div>
     </SwipeAction>
