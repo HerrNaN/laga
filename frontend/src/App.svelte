@@ -1,10 +1,12 @@
 <script lang="ts">
     import List from "./lib/list/List.svelte";
     import { pwaHack } from "./lib/list/utils/pwa-hack";
+    import NavBar from "./lib/NavBar.svelte";
 </script>
 
 <main {@attach pwaHack("100dvh")}>
     <List />
+    <NavBar />
 </main>
 
 <style>
@@ -17,6 +19,5 @@
         height: 100dvh;
         display: flex;
         flex-direction: column;
-        background-color: var(--wa-color-surface-default);
     }
 </style>

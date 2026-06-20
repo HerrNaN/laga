@@ -1,18 +1,28 @@
-<script>
+<script lang="ts">
     import AddItem from "./AddItem.svelte";
     import ItemList from "./ItemList.svelte";
     import { items } from "./store";
 </script>
 
-<header>
-    <h1>Inköpslista</h1>
-</header>
-<div class="list-area">
-    <ItemList items={$items} />
-</div>
-<AddItem />
+<article>
+    <header>
+        <h1>Inköpslista</h1>
+    </header>
+    <div class="list-area">
+        <ItemList items={$items} />
+    </div>
+    <AddItem />
+</article>
 
 <style>
+    article {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--wa-color-surface-default);
+        overflow-y: hidden;
+    }
+
     .list-area {
         flex: 1;
         overflow-y: auto;
