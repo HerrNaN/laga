@@ -1,5 +1,6 @@
 <script lang="ts">
     import WaInput from "@awesome.me/webawesome/dist/components/input/input.js";
+    import "@awesome.me/webawesome/dist/components/drawer/drawer.js";
     import { items } from "./store";
 
     let input = $state<WaInput>();
@@ -19,59 +20,53 @@
             handleAdd();
         }
     }
+
+    const id = $props.id();
 </script>
 
 <div class="input-wrapper">
-    <div
-        class="backdrop"
-        role="presentation"
-        onclick={() => input?.blur()}
-    ></div>
-    <section>
+    <wa-drawer
+        {id}
+        placement="bottom"
+        light-dismiss
+        without-header
+        onwa-show={() => setTimeout(() => input?.focus())}
+    >
         <wa-input
+            bind:this={input}
             enterkeyhint="go"
             placeholder="t.ex. 2 kg potatis"
             bind:this={input}
             onkeydown={handleKeydown}
         ></wa-input>
-    </section>
+    </wa-drawer>
+    <wa-button size="l" variant="brand" data-drawer="open {id}">
+        <wa-icon name="plus"></wa-icon>
+    </wa-button>
 </div>
 
 <style>
     .input-wrapper {
-        position: fixed;
+        position: sticky;
+    }
+
+    wa-button {
+        margin: 1rem;
+        position: absolute;
         bottom: 0;
-        left: 0;
         right: 0;
-        z-index: 10;
     }
 
-    .backdrop {
-        position: fixed;
-        inset: 0;
-        background-color: var(--wa-color-overlay-modal);
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity var(--wa-transition-fast) ease;
-    }
+    wa-drawer {
+        --size: min-content;
+        --show-duration: 0;
 
-    .input-wrapper:focus-within .backdrop {
-        opacity: 1;
-        pointer-events: auto;
+        :global(&[open] + wa-button) {
+            display: none;
+        }
     }
 
     wa-input {
         width: 100%;
-    }
-
-    section {
-        position: relative;
-        height: var(--add-item-height);
-        padding: 0 var(--wa-space-m);
-        display: flex;
-        align-items: center;
-        box-shadow: 0 var(--wa-shadow-offset-x-m) var(--wa-shadow-offset-y-m)
-            var(--wa-color-shadow);
-        background-color: var(--wa-color-surface-raised);
     }
 </style>
