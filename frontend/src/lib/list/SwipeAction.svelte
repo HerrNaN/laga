@@ -1,5 +1,6 @@
 <script lang="ts" module>
     const THRESHOLD = 60;
+    const DEAD_ZONE = 10;
 </script>
 
 <script lang="ts">
@@ -39,7 +40,12 @@
     const handlePointerMove = (e: PointerEvent) => {
         if (!isDragging || !contentEl) return;
         const delta = startX - e.clientX;
-        currentX = -Math.max(0, Math.min(delta, contentEl.offsetWidth));
+        if (Math.abs(delta) <= DEAD_ZONE) {
+            currentX = 0;
+            return;
+        }
+        const adjusted = delta > 0 ? delta - DEAD_ZONE : delta + DEAD_ZONE;
+        currentX = -Math.max(0, Math.min(adjusted, contentEl.offsetWidth));
     };
 
     const handlePointerUp = () => {
