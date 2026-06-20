@@ -1,6 +1,6 @@
 <script lang="ts">
     import List from "./lib/list/List.svelte";
-    import { pwaHack } from "./lib/list/utils/pwa-hack";
+    import { pwaHack } from "./lib/utils/pwa-hack";
     import NavBar from "./lib/NavBar.svelte";
 </script>
 
