@@ -22,6 +22,13 @@ export class WrapMap<T extends Record<string, z.ZodTypeAny>> {
     }
     this.map.set(key as string, this.shape[key].encode(value));
   };
+  update = (updates: Partial<Out<T>>): void => {
+    for (const key in updates) {
+      if (updates[key] !== undefined) {
+        this.set(key, updates[key]);
+      }
+    }
+  };
   delete = <K extends keyof T & string>(key: K) => this.map.delete(key);
   assign = (data: Partial<Out<T>>): void => {
     for (const [key, value] of Object.entries(data)) {

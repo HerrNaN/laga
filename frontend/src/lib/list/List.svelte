@@ -1,7 +1,17 @@
 <script lang="ts">
+    import WaDialog from "@awesome.me/webawesome/dist/components/dialog/dialog.js";
     import AddItem from "./AddItem.svelte";
     import ItemList from "./ItemList.svelte";
     import { items } from "./store";
+    import { type Item } from "./list";
+    import EditItem from "./EditItem.svelte";
+
+    let editItemDialog = $state<WaDialog>();
+    let itemToEdit = $state<Item>();
+    const onClickEditItem = (item: Item) => {
+        if (editItemDialog) editItemDialog.open = true;
+        itemToEdit = item;
+    };
 </script>
 
 <article>
@@ -9,10 +19,19 @@
         <h1>Inköpslista</h1>
     </header>
     <div class="list-area">
-        <ItemList items={$items} />
+        <ItemList items={$items} {onClickEditItem} />
     </div>
     <AddItem />
 </article>
+
+<wa-dialog bind:this={editItemDialog} label="Edit Item" light-dismiss>
+    {#if itemToEdit}
+        <EditItem item={itemToEdit} />
+    {/if}
+    <wa-button slot="footer" variant="brand" data-dialog="close">
+        Close
+    </wa-button>
+</wa-dialog>
 
 <style>
     article {

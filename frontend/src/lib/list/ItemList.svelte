@@ -1,15 +1,16 @@
 <script lang="ts">
-    import { items } from "./store";
-    import type { Item } from "./list";
+    import "@awesome.me/webawesome/dist/components/button/button.js";
     import ItemRow from "./ItemRow.svelte";
     import { departmentOrder, getDepartment } from "./classifier";
-    import "@awesome.me/webawesome/dist/components/button/button.js";
+    import type { Item } from "./list";
+    import { items } from "./store";
 
     interface Props {
         items: Item[];
+        onClickEditItem: (item: Item) => void;
     }
 
-    let { items: itemList }: Props = $props();
+    let { items: itemList, onClickEditItem }: Props = $props();
 
     const checkedItems = $derived(
         itemList
@@ -32,7 +33,7 @@
         <ul>
             {#each deptItems as item (item.id)}
                 <li>
-                    <ItemRow {item} />
+                    <ItemRow {item} onEditItem={() => onClickEditItem(item)} />
                 </li>
             {/each}
         </ul>
@@ -55,7 +56,7 @@
         <ul>
             {#each checkedItems as item (item.id)}
                 <li>
-                    <ItemRow {item} />
+                    <ItemRow {item} onEditItem={() => onClickEditItem(item)} />
                 </li>
             {/each}
         </ul>

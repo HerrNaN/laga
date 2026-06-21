@@ -146,6 +146,12 @@ export const createItemsStore = async (deps: {
         getActiveDoc().commit();
       }
     },
+    updateItem: (id: string, updates: Partial<Item>) => {
+      const child = getActiveItems().get(id);
+      const item = new WrapMap(ItemSchema.shape, child);
+      item.update(updates);
+      getActiveDoc().commit();
+    },
     deleteItem: (id: string) => {
       getActiveItems().delete(id);
       getActiveDoc().commit();

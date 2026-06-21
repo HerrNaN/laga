@@ -7,9 +7,10 @@
 
     type Props = {
         item: Item;
+        onEditItem: () => void;
     };
 
-    let { item }: Props = $props();
+    let { item, onEditItem }: Props = $props();
 
     const checked = $derived(item.checkedAt !== undefined);
 
@@ -23,6 +24,11 @@
         if (e.propertyName === "opacity" && isRemoving) {
             items.deleteItem(item.id);
         }
+    };
+
+    const handleEditClick = (e: Event) => {
+        e.stopPropagation();
+        onEditItem();
     };
 
     const id = $props.id();
@@ -49,6 +55,9 @@
         >
             <wa-checkbox {id} defaultChecked={checked}></wa-checkbox>
             <label for={id}>{item.text}</label>
+            <wa-button appearance="plain" onclick={handleEditClick}>
+                <wa-icon name="pen"></wa-icon>
+            </wa-button>
         </div>
     </SwipeAction>
 </div>
@@ -74,6 +83,10 @@
         padding-inline: var(--wa-space-2xs);
         background-color: var(--wa-color-surface-default);
         border-radius: var(--wa-border-width-l);
+
+        label {
+            flex: 1;
+        }
 
         &:has(wa-checkbox:state(checked)) {
             label {
