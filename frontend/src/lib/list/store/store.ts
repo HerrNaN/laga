@@ -2,8 +2,8 @@ import { writable } from "svelte/store";
 import { LoroDoc, LoroMap } from "loro-crdt";
 import { ItemSchema, type Item } from "../list";
 import { classify, departments } from "../classifier";
-import { wrapMap } from "./loro";
 import type z from "zod";
+import { WrapMap } from "./loro";
 
 // ── Data model ──────────────────────────────────────────
 
@@ -125,7 +125,7 @@ export const createItemsStore = async (deps: {
       const { id: department } = classify(text, departments);
       const id = randomUUID();
       const itemMap = new LoroMap();
-      wrapMap(ItemSchema.shape, itemMap).assign({
+      new WrapMap(ItemSchema.shape, itemMap).assign({
         id,
         text,
         createdAt: new Date(),
@@ -137,7 +137,7 @@ export const createItemsStore = async (deps: {
     toggleItem: (id: string) => {
       const child = getActiveItems().get(id);
       if (child instanceof LoroMap) {
-        const item = wrapMap(ItemSchema.shape, child);
+        const item = new WrapMap(ItemSchema.shape, child);
         if (item.get("checkedAt") !== undefined) {
           item.delete("checkedAt");
         } else {
