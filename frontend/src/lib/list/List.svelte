@@ -35,7 +35,7 @@
 
 <style>
     article {
-        flex: 1;
+        height: 100%;
         display: flex;
         flex-direction: column;
         background-color: var(--wa-color-surface-default);
