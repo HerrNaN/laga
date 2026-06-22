@@ -20,8 +20,8 @@
     </header>
     <div class="list-area">
         <ItemList items={$items} {onClickEditItem} />
+        <AddItem />
     </div>
-    <AddItem />
 </article>
 
 <wa-dialog bind:this={editItemDialog} label="Edit Item" light-dismiss>
@@ -44,8 +44,9 @@
 
     .list-area {
         flex: 1;
+        display: flex;
+        flex-direction: column;
         overflow-y: auto;
-        padding-bottom: var(--add-item-height);
         background-color: var(--wa-color-surface-lowered);
     }
 

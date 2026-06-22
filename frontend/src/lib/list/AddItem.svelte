@@ -47,14 +47,16 @@
 
 <style>
     .input-wrapper {
+        height: 100%;
         position: sticky;
+        bottom: 0;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
     }
 
     wa-button {
         margin: 1rem;
-        position: absolute;
-        bottom: 0;
-        right: 0;
     }
 
     wa-drawer {

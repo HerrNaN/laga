@@ -24,7 +24,6 @@
 
 <style>
     :global(body) {
-        --add-item-height: calc(var(--wa-space-m) * 2 + 3rem);
         margin: 0;
     }
 
