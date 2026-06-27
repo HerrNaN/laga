@@ -16,7 +16,7 @@
 
 <article>
     <header>
-        <h1>Inköpslista</h1>
+        <h2>Inköpslista</h2>
     </header>
     <div class="list-area">
         <ItemList items={$items} {onClickEditItem} />
@@ -60,9 +60,10 @@
             var(--wa-color-shadow);
     }
 
-    h1 {
+    h2 {
         margin: 0;
         font-size: var(--wa-font-size-xl);
+        font-weight: var(--wa-font-weight-normal);
         color: var(--wa-color-text-normal);
     }
 </style>
