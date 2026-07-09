@@ -34,7 +34,7 @@
         <wa-button
             appearance="plain"
             aria-label="Back"
-            onclick={() => navigate(-1)}
+            onclick={() => navigate("/lists")}
         >
             <wa-icon name="arrow-left"></wa-icon>
         </wa-button>

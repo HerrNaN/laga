@@ -1,4 +1,5 @@
 <script lang="ts">
-    import { navigate } from "./router";
-    navigate("/lists", { replace: true });
+    import { navigateToDefaultList } from "./lib/list/navigation";
+
+    navigateToDefaultList();
 </script>

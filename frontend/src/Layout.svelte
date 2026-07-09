@@ -6,6 +6,7 @@
     import "@awesome.me/webawesome/dist/components/tab-group/tab-group.js";
     import "@awesome.me/webawesome/dist/components/tab-panel/tab-panel.js";
     import "@awesome.me/webawesome/dist/components/tab/tab.js";
+    import { navigateToDefaultList } from "./lib/list/navigation";
 
     let { children }: { children?: Snippet } = $props();
 </script>
@@ -31,7 +32,7 @@
             </li>
             <li class:active={route.pathname.startsWith("/lists")}>
                 <wa-button
-                    href={p("/lists")}
+                    onclick={navigateToDefaultList}
                     aria-label="Lists"
                     appearance="plain"
                 >
