@@ -2,7 +2,7 @@
     import "@awesome.me/webawesome/dist/components/select/select.js";
     import "@awesome.me/webawesome/dist/components/option/option.js";
     import type { Item } from "./list";
-    import { items } from "./store";
+    import { listStore } from "./store";
     import { departments } from "./classifier";
     import { type ChangeEvent } from "../utils/events";
 
@@ -13,10 +13,10 @@
     const { item }: Props = $props();
 
     const onChangeName = (e: ChangeEvent) =>
-        items.updateItem(item.id, { text: e.target.value });
+        listStore.updateItem(item.id, { text: e.target.value });
 
     const onChangeDepartement = (e: ChangeEvent) =>
-        items.updateItem(item.id, { department: e.target.value });
+        listStore.updateItem(item.id, { department: e.target.value });
 </script>
 
 <section>

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { items } from "./store";
+    import { listStore } from "./store";
     import type { Item } from "./list";
     import SwipeAction from "./SwipeAction.svelte";
     import "@awesome.me/webawesome/dist/components/checkbox/checkbox.js";
@@ -17,12 +17,12 @@
     let isRemoving = $state(false);
 
     const handleToggle = () => {
-        items.toggleItem(item.id);
+        listStore.toggleItem(item.id);
     };
 
     const handleTransitionEnd = (e: TransitionEvent) => {
         if (e.propertyName === "opacity" && isRemoving) {
-            items.deleteItem(item.id);
+            listStore.deleteItem(item.id);
         }
     };
 

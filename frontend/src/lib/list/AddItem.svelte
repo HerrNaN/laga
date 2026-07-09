@@ -1,7 +1,7 @@
 <script lang="ts">
     import WaInput from "@awesome.me/webawesome/dist/components/input/input.js";
     import "@awesome.me/webawesome/dist/components/drawer/drawer.js";
-    import { items } from "./store";
+    import { listStore } from "./store";
 
     let input = $state<WaInput>();
 
@@ -10,7 +10,7 @@
 
         const text = input.value?.trim();
         if (text) {
-            items.addItem(text);
+            listStore.addItem(text);
             input.value = "";
         }
     }

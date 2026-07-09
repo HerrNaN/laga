@@ -8,6 +8,7 @@ import {
 } from "vitest";
 import { createItemsStore } from "./store";
 import type { Item } from "../list";
+import type { ActiveList, ListSummary } from "./store";
 
 // Mock classifier for deterministic results
 vi.mock("../classifier", () => ({
@@ -40,15 +41,15 @@ const createStore = async () => {
   return { persistence, store };
 };
 
-// Helper: collect current store value via subscribe
+// Helper: collect current active-list items via subscribe
 const collect = (store: {
-  subscribe: (fn: (v: Item[]) => void) => () => void;
+  activeList: { subscribe: (fn: (v: ActiveList) => void) => () => void };
 }): Promise<Item[]> =>
   new Promise((resolve) => {
-    store.subscribe((v) => resolve(v));
+    store.activeList.subscribe((v) => resolve(v.items));
   });
 
-describe("itemsStore", () => {
+describe("listStore", () => {
   beforeEach(() => {
     uuidCounter = 0;
     vi.clearAllMocks();
@@ -57,6 +58,19 @@ describe("itemsStore", () => {
   it("starts with an empty list", async () => {
     const { store } = await createStore();
     expect(await collect(store)).toEqual([]);
+  });
+
+  describe("lists", () => {
+    it("exposes the registered lists with default name and zero items", async () => {
+      const { store } = await createStore();
+      const lists = await new Promise<ListSummary[]>((resolve) =>
+        store.lists.subscribe(resolve),
+      );
+
+      expect(lists).toHaveLength(1);
+      expect(lists[0].name).toBe("unnamed list");
+      expect(lists[0].itemCount).toBe(0);
+    });
   });
 
   describe("addItem", () => {

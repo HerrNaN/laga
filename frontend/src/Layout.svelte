@@ -1,6 +1,6 @@
 <script lang="ts">
     import { type Snippet } from "svelte";
-    import { isActive, p } from "./router";
+    import { p, route } from "./router";
 
     import "@awesome.me/webawesome/dist/components/icon/icon.js";
     import "@awesome.me/webawesome/dist/components/tab-group/tab-group.js";
@@ -29,7 +29,7 @@
                     <wa-icon name="kitchen-set"></wa-icon>
                 </wa-button>
             </li>
-            <li class:active={isActive("/lists")}>
+            <li class:active={route.pathname.startsWith("/lists")}>
                 <wa-button
                     href={p("/lists")}
                     aria-label="Lists"

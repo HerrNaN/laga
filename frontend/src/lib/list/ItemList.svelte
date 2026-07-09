@@ -3,7 +3,7 @@
     import ItemRow from "./ItemRow.svelte";
     import { departmentOrder, getDepartment } from "./classifier";
     import type { Item } from "./list";
-    import { items } from "./store";
+    import { listStore } from "./store";
 
     interface Props {
         items: Item[];
@@ -48,7 +48,7 @@
                 size="s"
                 variant="brand"
                 appearance="plain"
-                onclick={() => items.deleteCheckedItems()}
+                onclick={() => listStore.deleteCheckedItems()}
             >
                 Clear
             </wa-button>

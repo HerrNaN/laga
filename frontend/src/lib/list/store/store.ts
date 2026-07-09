@@ -22,6 +22,18 @@ type List = {
 
 type EncodedItem = z.input<typeof ItemSchema>;
 
+export type ListSummary = {
+  id: string;
+  name: string;
+  itemCount: number;
+};
+
+export type ActiveList = {
+  id: string;
+  name: string;
+  items: Item[];
+};
+
 // ── Factory ─────────────────────────────────────────────
 
 export const createItemsStore = async (deps: {
@@ -33,13 +45,20 @@ export const createItemsStore = async (deps: {
 }) => {
   const { persistence, randomUUID } = deps;
 
+  // ── Stores ─────────────────────────────────────────────
+
+  const listsWritable = writable<ListSummary[]>([]);
+  const activeListWritable = writable<ActiveList>({
+    id: "",
+    name: "",
+    items: [],
+  });
+
   // ── Registry doc ────────────────────────────────────────
 
   const registryDoc = new LoroDoc<Registry>();
   await persistence.load(registryDoc, "registry");
   const registryLists = registryDoc.getMap("lists");
-
-  registryDoc.subscribe(() => persistence.save(registryDoc, "registry"));
 
   // ── Per-list docs ───────────────────────────────────────
 
@@ -56,6 +75,12 @@ export const createItemsStore = async (deps: {
     await persistence.load(doc, `list-${id}`);
     listDocs.set(id, doc);
     setupAutoSave(doc, id);
+    doc.subscribe(rebuildLists);
+
+    if (!doc.getMap("meta").get("name")) {
+      doc.getMap("meta").set("name", "unnamed list");
+      doc.commit();
+    }
 
     return doc;
   };
@@ -64,7 +89,7 @@ export const createItemsStore = async (deps: {
     const id = randomUUID();
     const doc = new LoroDoc<List>();
     setupAutoSave(doc, id);
-    doc.getMap("meta").set("name", "");
+    doc.getMap("meta").set("name", "unnamed list");
     doc.getMap("items");
     listDocs.set(id, doc);
 
@@ -74,13 +99,62 @@ export const createItemsStore = async (deps: {
     return id;
   };
 
+  // ── Active doc accessors ────────────────────────────────
+
+  let activeListId = "";
+
+  const getActiveDoc = (): LoroDoc<List> => {
+    const doc = listDocs.get(activeListId);
+    if (!doc) throw new Error(`List doc ${activeListId} not loaded`);
+    return doc;
+  };
+
+  const getActiveItems = (): LoroMap<Items> => getActiveDoc().getMap("items");
+
+  // ── Rebuilds ────────────────────────────────────────────
+
+  const readActiveName = (): string =>
+    (getActiveDoc().getMap("meta").get("name") as string | undefined) ?? "";
+
+  const rebuildActiveList = () => {
+    const itemsMap = getActiveItems();
+    activeListWritable.set({
+      id: activeListId,
+      name: readActiveName(),
+      items: itemsMap
+        .keys()
+        .map((id) => ItemSchema.parse(itemsMap.get(id).toJSON())),
+    });
+  };
+
+  const rebuildLists = () => {
+    listsWritable.set(
+      registryLists.keys().map((id) => {
+        const doc = listDocs.get(id);
+        const meta = doc?.getMap("meta");
+        const itemsMap = doc?.getMap("items");
+        return {
+          id,
+          name: (meta?.get("name") as string | undefined) ?? "",
+          itemCount: itemsMap ? itemsMap.size : 0,
+        };
+      }),
+    );
+    rebuildActiveList();
+  };
+
   // ── Active list ─────────────────────────────────────────
 
   const ensureDefaultList = (): string =>
     registryLists.entries()[0]?.[0] ?? createListDoc();
 
-  let activeListId = ensureDefaultList();
+  activeListId = ensureDefaultList();
   await loadListDoc(activeListId);
+
+  registryDoc.subscribe(() => {
+    persistence.save(registryDoc, "registry");
+    rebuildLists();
+  });
 
   // Load remaining list docs in background
   Promise.all(
@@ -94,33 +168,26 @@ export const createItemsStore = async (deps: {
       ),
   );
 
-  // ── Active doc accessors ────────────────────────────────
-
-  const getActiveDoc = (): LoroDoc<List> => {
-    const doc = listDocs.get(activeListId);
-    if (!doc) throw new Error(`List doc ${activeListId} not loaded`);
-    return doc;
-  };
-
-  const getActiveItems = (): LoroMap<Items> => getActiveDoc().getMap("items");
-
   // ── Store ───────────────────────────────────────────────
 
-  const { subscribe, set } = writable<Item[]>([]);
+  let activeUnsub: (() => void) | undefined;
 
-  const rebuildItems = () => {
-    const itemsMap = getActiveItems();
-    set(
-      itemsMap.keys().map((id) => ItemSchema.parse(itemsMap.get(id).toJSON())),
-    );
+  rebuildActiveList();
+  activeUnsub = getActiveDoc().subscribe(rebuildActiveList);
+  rebuildLists();
+
+  const setActiveList = async (id: string) => {
+    await loadListDoc(id);
+    activeListId = id;
+    activeUnsub?.();
+    rebuildActiveList();
+    activeUnsub = getActiveDoc().subscribe(rebuildActiveList);
   };
 
-  rebuildItems();
-
-  getActiveDoc().subscribe(rebuildItems);
-
   return {
-    subscribe,
+    lists: { subscribe: listsWritable.subscribe },
+    activeList: { subscribe: activeListWritable.subscribe },
+    setActiveList,
     addItem: (text: string) => {
       const { id: department } = classify(text, departments);
       const id = randomUUID();
