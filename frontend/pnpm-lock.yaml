@@ -14,6 +14,9 @@ importers:
       loro-crdt:
         specifier: ^1.13.3
         version: 1.13.3
+      sv-router:
+        specifier: ^0.17.0
+        version: 0.17.0(svelte@5.55.5)
       zod:
         specifier: ^4.4.3
         version: 4.4.3
@@ -1952,6 +1955,12 @@ packages:
   supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  sv-router@0.17.0:
+    resolution: {integrity: sha512-vny+g+yVhb2fUi9+hD3JwrzCM45iXXK3BAYwxRr0Uqw1gGcPXuUjkpeoisdZt9/D/lwiJ6UaKSGhKMeIy5a1QA==}
+    hasBin: true
+    peerDependencies:
+      svelte: ^5
 
   svelte-check@4.4.8:
     resolution: {integrity: sha512-67adfgBox5eNSNIvIIwgFizKGdcRrGpiMoNO2obHcYuLz7iTa8Xgm/NGU3ntMFnNm8K1grFOIG6HhMLX/vcN8w==}
@@ -4336,6 +4345,11 @@ snapshots:
   strip-comments@2.0.1: {}
 
   supports-preserve-symlinks-flag@1.0.0: {}
+
+  sv-router@0.17.0(svelte@5.55.5):
+    dependencies:
+      esm-env: 1.2.2
+      svelte: 5.55.5
 
   svelte-check@4.4.8(picomatch@4.0.4)(svelte@5.55.5)(typescript@6.0.3):
     dependencies:
