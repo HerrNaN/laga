@@ -50,9 +50,6 @@
     {#if itemToEdit}
         <EditItem item={itemToEdit} />
     {/if}
-    <wa-button slot="footer" variant="brand" data-dialog="close">
-        Close
-    </wa-button>
 </wa-dialog>
 
 <style>
