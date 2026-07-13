@@ -81,10 +81,10 @@
 
                 &.active {
                     wa-icon {
-                        color: blue;
+                        color: var(--wa-color-brand);
                         padding: 1rem 2rem;
                         border-radius: var(--wa-border-radius-l);
-                        background-color: lightblue;
+                        background-color: var(--wa-color-brand-fill-normal);
                     }
                 }
             }
