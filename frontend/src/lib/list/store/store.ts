@@ -188,6 +188,11 @@ export const createItemsStore = async (deps: {
     lists: { subscribe: listsWritable.subscribe },
     activeList: { subscribe: activeListWritable.subscribe },
     setActiveList,
+    changeListName: (name: string) => {
+      const listDoc = getActiveDoc();
+      listDoc.getMap("meta").set("name", name);
+      listDoc.commit();
+    },
     addItem: (text: string) => {
       const { id: department } = classify(text, departments);
       const id = randomUUID();

@@ -9,8 +9,9 @@
     import { type Item } from "./list";
     import EditItem from "./EditItem.svelte";
     import { route, navigate } from "../../router";
+    import Input from "../components/Input.svelte";
 
-    const { activeList, lists, setActiveList } = listStore;
+    const { activeList, lists, changeListName, setActiveList } = listStore;
 
     let editItemDialog = $state<WaDialog>();
     let itemToEdit = $state<Item>();
@@ -38,7 +39,9 @@
         >
             <wa-icon name="arrow-left"></wa-icon>
         </wa-button>
-        <h2>{$activeList.name}</h2>
+        <h2>
+            <Input value={$activeList.name} onsave={changeListName} />
+        </h2>
     </header>
     <div class="list-area">
         <ItemList items={$activeList.items} {onClickEditItem} />
@@ -76,7 +79,6 @@
         top: 0;
         display: flex;
         align-items: center;
-        gap: var(--wa-space-s);
         padding: var(--wa-space-m);
         background-color: var(--wa-color-surface-raised);
         box-shadow: 0 var(--wa-shadow-offset-x-m) var(--wa-shadow-offset-y-m)
@@ -84,8 +86,8 @@
     }
 
     h2 {
-        flex: 1;
         margin: 0;
+        margin-inline-start: var(--wa-space-xs);
         font-size: var(--wa-font-size-xl);
         font-weight: var(--wa-font-weight-normal);
         color: var(--wa-color-text-normal);
