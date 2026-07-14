@@ -58,6 +58,10 @@ export const createItemsStore = async (deps: {
 
   const registryDoc = new LoroDoc<Registry>();
   await persistence.load(registryDoc, "registry");
+  registryDoc.subscribe(() => {
+    persistence.save(registryDoc, "registry");
+    rebuildLists();
+  });
   const registryLists = registryDoc.getMap("lists");
 
   // ── Per-list docs ───────────────────────────────────────
@@ -89,6 +93,7 @@ export const createItemsStore = async (deps: {
     const id = randomUUID();
     const doc = new LoroDoc<List>();
     setupAutoSave(doc, id);
+    doc.subscribe(rebuildLists);
     doc.getMap("meta").set("name", "Shopping List");
     doc.getMap("items");
     listDocs.set(id, doc);
@@ -150,11 +155,6 @@ export const createItemsStore = async (deps: {
 
   activeListId = ensureDefaultList();
   await loadListDoc(activeListId);
-
-  registryDoc.subscribe(() => {
-    persistence.save(registryDoc, "registry");
-    rebuildLists();
-  });
 
   // Load remaining list docs in background
   Promise.all(
