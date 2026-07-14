@@ -68,7 +68,7 @@ describe("listStore", () => {
       );
 
       expect(lists).toHaveLength(1);
-      expect(lists[0].name).toBe("unnamed list");
+      expect(lists[0].name).toBe("Shopping List");
       expect(lists[0].itemCount).toBe(0);
     });
   });
