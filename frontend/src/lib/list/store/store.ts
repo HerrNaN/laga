@@ -135,7 +135,7 @@ export const createItemsStore = async (deps: {
         const itemsMap = doc?.getMap("items");
         return {
           id,
-          name: (meta?.get("name") as string | undefined) ?? "",
+          name: meta?.get("name") ?? "",
           itemCount: itemsMap ? itemsMap.size : 0,
         };
       }),
