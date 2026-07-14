@@ -78,7 +78,7 @@ export const createItemsStore = async (deps: {
     doc.subscribe(rebuildLists);
 
     if (!doc.getMap("meta").get("name")) {
-      doc.getMap("meta").set("name", "unnamed list");
+      doc.getMap("meta").set("name", "Shopping List");
       doc.commit();
     }
 
@@ -89,7 +89,7 @@ export const createItemsStore = async (deps: {
     const id = randomUUID();
     const doc = new LoroDoc<List>();
     setupAutoSave(doc, id);
-    doc.getMap("meta").set("name", "unnamed list");
+    doc.getMap("meta").set("name", "Shopping List");
     doc.getMap("items");
     listDocs.set(id, doc);
 
