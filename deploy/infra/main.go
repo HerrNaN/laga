@@ -26,6 +26,11 @@ func main() {
 			return err
 		}
 
+		databaseURL, err := createDatabase(ctx, region, ns.ProjectId)
+		if err != nil {
+			return err
+		}
+
 		container, err := containers.NewContainer(ctx, "laga", &containers.ContainerArgs{
 			Name:                 pulumi.String("laga"),
 			NamespaceId:          ns.ID(),
@@ -40,6 +45,9 @@ func main() {
 			Timeout:              pulumi.Int(5),
 			Privacy:              pulumi.String("public"),
 			Region:               pulumi.String(region),
+			SecretEnvironmentVariables: pulumi.StringMap{
+				"DATABASE_URL": databaseURL,
+			},
 		})
 		if err != nil {
 			return err

@@ -2,20 +2,42 @@ package app
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log/slog"
 	"net/http"
 	"time"
 
+	"github.com/herrnan/laga/internal/app/auth"
+	"github.com/herrnan/laga/internal/app/migrations"
 	"github.com/herrnan/laga/internal/app/web"
 	"github.com/herrnan/laga/internal/util"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"golang.org/x/sync/errgroup"
 )
 
 func Run(ctx context.Context, log *slog.Logger, cfg Config) error {
-	eg, ctx := errgroup.WithContext(ctx)
+	if cfg.DatabaseURL == "" {
+		return errors.New("missing database url")
+	}
+
+	pool, err := pgxpool.New(ctx, cfg.DatabaseURL)
+	if err != nil {
+		return fmt.Errorf("create database pool: %w", err)
+	}
+	defer pool.Close()
+
+	if err := migrations.Up(pool); err != nil {
+		return err
+	}
+
+	authHandler, err := auth.New(pool, cfg.WebAuthnRPID, cfg.WebAuthnOrigin, log)
+	if err != nil {
+		return fmt.Errorf("configure authentication: %w", err)
+	}
 
 	mux := http.NewServeMux()
+	authHandler.Register(mux)
 
 	if cfg.ExternalWebServerAddress != "" {
 		serveWeb, err := web.ServeProxy(cfg.ExternalWebServerAddress)
@@ -23,7 +45,11 @@ func Run(ctx context.Context, log *slog.Logger, cfg Config) error {
 			return fmt.Errorf("create web server proxy: %w", err)
 		}
 
-		log.Info("Running against external web server", "external_web_server_address", cfg.ExternalWebServerAddress)
+		log.Info(
+			"Running against external web server",
+			"external_web_server_address",
+			cfg.ExternalWebServerAddress,
+		)
 		mux.HandleFunc("/", serveWeb)
 	} else {
 		serveWeb, err := web.ServeStatic()
@@ -40,15 +66,16 @@ func Run(ctx context.Context, log *slog.Logger, cfg Config) error {
 		ReadHeaderTimeout: 1 * time.Second,
 	}
 
+	eg, ctx := errgroup.WithContext(ctx)
 	eg.Go(func() error {
 		log.Info("Server starting", "address", server.Addr)
 
 		err := util.ListenAndServe(ctx, server, time.Second*10)
 		if err != nil {
-			return nil
+			return fmt.Errorf("http server failed: %w", err)
 		}
 
-		return fmt.Errorf("http server failed: %w", err)
+		return nil
 	})
 
 	return eg.Wait()

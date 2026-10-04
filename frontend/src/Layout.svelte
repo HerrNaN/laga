@@ -1,12 +1,13 @@
 <script lang="ts">
     import { type Snippet } from "svelte";
-    import { p, route } from "./router";
+    import { navigate, route } from "./router";
 
     import "@awesome.me/webawesome/dist/components/icon/icon.js";
     import "@awesome.me/webawesome/dist/components/tab-group/tab-group.js";
     import "@awesome.me/webawesome/dist/components/tab-panel/tab-panel.js";
     import "@awesome.me/webawesome/dist/components/tab/tab.js";
     import { navigateToDefaultList } from "./lib/list/navigation";
+    import { hasActiveSession, session } from "./lib/user/session";
 
     let { children }: { children?: Snippet } = $props();
 </script>
@@ -35,8 +36,19 @@
                     onclick={navigateToDefaultList}
                     aria-label="Lists"
                     appearance="plain"
+                    disabled={!$session}
                 >
                     <wa-icon name="list-check"></wa-icon>
+                </wa-button>
+            </li>
+            <li class:active={route.pathname.startsWith("/user")}>
+                <wa-button
+                    onclick={() => navigate("/user")}
+                    aria-label="User"
+                    appearance="plain"
+                    disabled={!$session}
+                >
+                    <wa-icon name="user"></wa-icon>
                 </wa-button>
             </li>
         </ul>

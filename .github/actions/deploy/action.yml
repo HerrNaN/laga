@@ -8,6 +8,9 @@ inputs:
   access-key:
     description: Scaleway Access Key
     required: true
+  pulumi-config-passphrase:
+    description: Pulumi config passphrase
+    required: true
 
 runs:
   using: composite
@@ -28,14 +31,10 @@ runs:
 
     - name: Deploy
       shell: bash
-      working-directory: deploy/infra
       env:
         SCW_SECRET_KEY: ${{ inputs.secret-key }}
         AWS_SECRET_KEY: ${{ inputs.secret-key }}
         SCW_ACCESS_KEY: ${{ inputs.access-key }}
         AWS_ACCESS_KEY: ${{ inputs.access-key }}
-        PULUMI_CONFIG_PASSPHRASE: ""
-      run: |
-        pulumi login 's3://laga-pulumi-state?endpoint=https://s3.fr-par.scw.cloud&region=fr-par'
-        pulumi stack select prod
-        pulumi up --yes --non-interactive --suppress-progress
+        PULUMI_CONFIG_PASSPHRASE: ${{ inputs.pulumi-config-passphrase }}
+      run: mise run deploy --non-interactive
