@@ -1,6 +1,7 @@
 <script lang="ts">
     import { listStore } from "./store";
     import { p } from "../../router";
+    import { session } from "../user/session";
     import "@awesome.me/webawesome/dist/components/icon/icon.js";
 
     const { lists } = listStore;
@@ -9,6 +10,13 @@
 <article>
     <header>
         <h2>Lists</h2>
+        <a
+            href={$session ? p("/user") : p("/sign-in")}
+            class="account"
+            aria-label={$session ? "Account" : "Sign in"}
+        >
+            <wa-icon name={$session ? "user" : "right-to-bracket"}></wa-icon>
+        </a>
     </header>
     <ul>
         {#each $lists as list (list.id)}
@@ -42,6 +50,16 @@
         background-color: var(--wa-color-surface-raised);
         box-shadow: 0 var(--wa-shadow-offset-x-m) var(--wa-shadow-offset-y-m)
             var(--wa-color-shadow);
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    header .account {
+        padding: var(--wa-space-2xs);
+        justify-content: center;
+        border-radius: 50%;
     }
 
     h2 {

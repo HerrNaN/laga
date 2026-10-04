@@ -6,4 +6,7 @@ type Config struct {
 	LogLevel                 slog.Level `envconfig:"LOG_LEVEL"`
 	Port                     int        `envconfig:"PORT" required:"true"`
 	ExternalWebServerAddress string     `envconfig:"EXTERNAL_WEB_SERVER_ADDRESS"`
+	DatabaseURL              string     `envconfig:"DATABASE_URL"`
+	WebAuthnRPID             string     `envconfig:"WEBAUTHN_RP_ID"`
+	WebAuthnOrigin           string     `envconfig:"WEBAUTHN_ORIGIN"`
 }

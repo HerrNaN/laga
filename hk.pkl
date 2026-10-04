@@ -39,6 +39,13 @@ local linters = new Mapping<String, Step> {
   }
 }
 
+local tests = new Mapping<String, Step> {
+  ["web-e2e-tests"] {
+    check = "pnpm test:e2e"
+    dir = "frontend"
+  }
+}
+
 local audit = new Mapping<String, Step> {
   ["go-vuln-check"] = Builtins.go_vuln_check
 }
@@ -50,6 +57,9 @@ hooks {
   }
   ["check"] {
     steps = linters
+  }
+  ["test"] {
+    steps = tests
   }
   ["audit"] {
     steps = audit

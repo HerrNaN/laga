@@ -462,3 +462,28 @@ provenance = "cosign"
 checksum = "sha256:ba7fb9c120d54e113b7a98567fb316accf8c3b6a492599f4c20fb577d735246e"
 url = "https://github.com/pulumi/pulumi/releases/download/v3.243.0/pulumi-v3.243.0-windows-x64.zip"
 provenance = "cosign"
+
+[[tools.sqlc]]
+version = "1.31.1"
+backend = "aqua:sqlc-dev/sqlc"
+
+[tools.sqlc."platforms.linux-arm64"]
+url = "https://downloads.sqlc.dev/sqlc_1.31.1_linux_arm64.tar.gz"
+
+[tools.sqlc."platforms.linux-arm64-musl"]
+url = "https://downloads.sqlc.dev/sqlc_1.31.1_linux_arm64.tar.gz"
+
+[tools.sqlc."platforms.linux-x64"]
+url = "https://downloads.sqlc.dev/sqlc_1.31.1_linux_amd64.tar.gz"
+
+[tools.sqlc."platforms.linux-x64-musl"]
+url = "https://downloads.sqlc.dev/sqlc_1.31.1_linux_amd64.tar.gz"
+
+[tools.sqlc."platforms.macos-arm64"]
+url = "https://downloads.sqlc.dev/sqlc_1.31.1_darwin_arm64.tar.gz"
+
+[tools.sqlc."platforms.macos-x64"]
+url = "https://downloads.sqlc.dev/sqlc_1.31.1_darwin_amd64.tar.gz"
+
+[tools.sqlc."platforms.windows-x64"]
+url = "https://downloads.sqlc.dev/sqlc_1.31.1_windows_amd64.tar.gz"

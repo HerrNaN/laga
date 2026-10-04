@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 
 .vite/
+playwright-report/
+test-results/

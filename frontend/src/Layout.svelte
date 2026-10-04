@@ -1,6 +1,6 @@
 <script lang="ts">
     import { type Snippet } from "svelte";
-    import { p, route } from "./router";
+    import { route } from "./router";
 
     import "@awesome.me/webawesome/dist/components/icon/icon.js";
     import "@awesome.me/webawesome/dist/components/tab-group/tab-group.js";

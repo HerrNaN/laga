@@ -16,6 +16,7 @@ gofumpt = "latest"
 "github:golangci/golines" = "latest"
 "github:securego/gosec" = "latest"
 golangci-lint = "latest"
+sqlc = "latest"
 
 # Web
 node = "24"
@@ -41,6 +42,9 @@ dir = "backend"
 run = "go run ./cmd/laga"
 env.EXTERNAL_WEB_SERVER_ADDRESS = "http://localhost:5173"
 env.PORT = 8080
+env.DATABASE_URL = "postgres://laga:laga@localhost:5432/laga?sslmode=disable"
+env.WEBAUTHN_RP_ID = "localhost"
+env.WEBAUTHN_ORIGIN = "http://localhost:8080"
 hide = true
 
 # === Building ===
@@ -63,6 +67,11 @@ depends = ["build-fe"]
 dir = "backend/cmd/laga"
 run = "go run ."
 env.PORT = 9090
+
+[tasks.generate]
+description = "Regenerate sqlc queries"
+dir = "backend"
+run = "sqlc generate"
 
 # === Backlog ===
 
