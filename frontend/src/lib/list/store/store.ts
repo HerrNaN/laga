@@ -122,6 +122,9 @@ export const createItemsStore = async (deps: {
     (getActiveDoc().getMap("meta").get("name") as string | undefined) ?? "";
 
   const rebuildActiveList = () => {
+    // Registry subscriptions can run before the initial active list is selected.
+    if (!activeListId) return;
+
     const itemsMap = getActiveItems();
     activeListWritable.set({
       id: activeListId,

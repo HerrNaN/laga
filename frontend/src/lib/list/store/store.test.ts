@@ -1,11 +1,5 @@
-import {
-  describe,
-  it,
-  expect,
-  vi,
-  beforeEach,
-  type MockedFunction,
-} from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import type { LoroDoc } from "loro-crdt";
 import { createItemsStore } from "./store";
 import type { Item } from "../list";
 import type { ActiveList, ListSummary } from "./store";
@@ -20,14 +14,17 @@ vi.mock("../classifier", () => ({
 
 let uuidCounter = 0;
 
-const createStore = async () => {
+const createStore = async (snapshots = new Map<string, Uint8Array>()) => {
   const persistence = {
-    load: vi.fn().mockResolvedValue(undefined) as MockedFunction<
-      () => Promise<boolean>
-    >,
-    save: vi.fn().mockResolvedValue(undefined) as MockedFunction<
-      () => Promise<void>
-    >,
+    load: vi.fn(async (doc: LoroDoc, key: string) => {
+      const snapshot = snapshots.get(key);
+      if (!snapshot) return false;
+      doc.import(snapshot);
+      return true;
+    }),
+    save: vi.fn(async (doc: LoroDoc, key: string) => {
+      snapshots.set(key, doc.export({ mode: "snapshot" }));
+    }),
   };
 
   const store = await createItemsStore({
@@ -58,6 +55,26 @@ describe("listStore", () => {
   it("starts with an empty list", async () => {
     const { store } = await createStore();
     expect(await collect(store)).toEqual([]);
+  });
+
+  it("restores the active list from persisted documents", async () => {
+    const snapshots = new Map<string, Uint8Array>();
+    const { store } = await createStore(snapshots);
+    store.changeListName("Groceries");
+    store.addItem("milk");
+    const items = await collect(store);
+
+    const { store: restored, persistence } = await createStore(snapshots);
+
+    expect(await collect(restored)).toEqual(items);
+    const lists = await new Promise<ListSummary[]>((resolve) =>
+      restored.lists.subscribe(resolve),
+    );
+    expect(lists).toEqual([
+      { id: "uuid-1", name: "Groceries", itemCount: 1 },
+    ]);
+    expect(persistence.load).toHaveBeenCalledWith(expect.anything(), "registry");
+    expect(persistence.load).toHaveBeenCalledWith(expect.anything(), "list-uuid-1");
   });
 
   describe("lists", () => {
