@@ -111,7 +111,7 @@ pulumi login 's3://laga-pulumi-state?endpoint=https://s3.fr-par.scw.cloud&region
 pulumi stack select prod
 
 if [ "${usage_non_interactive:-false}" = "true" ]; then
-    pulumi up --yes --non-interactive --surpress-progress
+    pulumi up --yes --non-interactive --suppress-progress
 else
     pulumi up
 fi
