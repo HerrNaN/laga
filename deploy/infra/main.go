@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/pulumiverse/pulumi-scaleway/sdk/go/scaleway/containers"
 )
@@ -31,6 +33,10 @@ func main() {
 			return err
 		}
 
+		//TODO: Remove these when custom domain is fixed
+		rpID := "lagac418ad86-laga.functions.fnc.fr-par.scw.cloud"
+		origin := "https://" + rpID
+
 		container, err := containers.NewContainer(ctx, "laga", &containers.ContainerArgs{
 			Name:                 pulumi.String("laga"),
 			NamespaceId:          ns.ID(),
@@ -46,12 +52,22 @@ func main() {
 			Privacy:              pulumi.String("public"),
 			Region:               pulumi.String(region),
 			SecretEnvironmentVariables: pulumi.StringMap{
-				"DATABASE_URL": databaseURL,
+				"DATABASE_URL":    databaseURL,
+				"WEBAUTHN_RP_ID":  pulumi.String(rpID),
+				"WEBAUTHN_ORIGIN": pulumi.String(origin),
 			},
 		})
 		if err != nil {
 			return err
 		}
+
+		container.PublicEndpoint.ToStringOutput().ApplyT(func(endpoint string) error {
+			if endpoint != origin || ("https://"+endpoint) != origin {
+				return fmt.Errorf("public endpoint has changed: %s", endpoint)
+			}
+
+			return nil
+		})
 
 		ctx.Export("url", pulumi.Sprintf("https://%s", container.PublicEndpoint))
 		return nil
