@@ -16,6 +16,7 @@ gofumpt = "latest"
 "github:golangci/golines" = "latest"
 "github:securego/gosec" = "latest"
 golangci-lint = "latest"
+sqlc = "latest"
 
 # Web
 node = "24"
@@ -37,16 +38,24 @@ run = "pnpm dev"
 hide = true
 
 [tasks.dev-be]
+depends = ["generate", "dev-db"]
 dir = "backend"
 run = "go run ./cmd/laga"
 env.EXTERNAL_WEB_SERVER_ADDRESS = "http://localhost:5173"
 env.PORT = 8080
+env.DATABASE_URL = "postgres://laga:laga@localhost:5432/laga?sslmode=disable"
+env.WEBAUTHN_RP_ID = "localhost"
+env.WEBAUTHN_ORIGIN = "http://localhost:8080"
 hide = true
+
+[tasks.dev-db]
+description = "Start the development database and wait until it is healthy"
+run = "docker compose up -d --wait db"
 
 # === Building ===
 
 [tasks.build]
-depends = ["build-fe"]
+depends = ["build-fe", "generate"]
 dir = "backend/cmd/laga"
 run = "go build ."
 env.CGO_ENABLED = 0
@@ -59,13 +68,78 @@ hide = true
 
 [tasks.preview]
 description = "Preview build for production"
-depends = ["build-fe"]
+depends = ["build-fe", "generate"]
 dir = "backend/cmd/laga"
 run = "go run ."
 env.PORT = 9090
+
+[tasks.generate]
+description = "Regenerate sqlc queries"
+dir = "backend"
+run = "sqlc generate"
 
 # === Backlog ===
 
 [tasks.backlog-web]
 description = "Run backlog web UI"
 run = "backlog-bun browser"
+
+# === Deployment ===
+
+[tasks.deploy]
+description = "Deploy application IaC"
+dir = "deploy/infra"
+usage = '''
+flag "--non-interactive"
+'''
+run = """
+#!/usr/bin/env bash
+
+if [[ -z "${SCW_ACCESS_KEY:-}" ]]; then
+    read -p "Enter Scalway access key: " SCW_ACCESS_KEY
+fi
+if [[ -z "${SCW_SECRET_KEY:-}" ]]; then
+    read -p "Enter Scalway secret key: " SCW_SECRET_KEY
+fi
+
+export SCW_ACCESS_KEY
+export SCW_SECRET_KEY
+export AWS_ACCESS_KEY=$SCW_ACCESS_KEY
+export AWS_SECRET_KEY=$SCW_SECRET_KEY
+
+pulumi login 's3://laga-pulumi-state?endpoint=https://s3.fr-par.scw.cloud&region=fr-par'
+pulumi stack select prod
+
+if [ "${usage_non_interactive:-false}" = "true" ]; then
+    pulumi up --yes --non-interactive --surpress-progress
+else
+    pulumi up
+fi
+
+pulumi logout
+"""
+
+[tasks.bootstrap]
+description = "Deploy bootstrap IaC"
+confirm = "You are about to deploy BOOTSTRAP, are you sure?"
+dir = "deploy/bootstrap"
+run = """
+#!/usr/bin/env bash
+
+echo -n "Enter Scalway access key: "
+read SCW_ACCESS_KEY
+echo -n "Enter Scalway secret key: "
+read SCW_SECRET_KEY
+
+export SCW_ACCESS_KEY
+export SCW_SECRET_KEY
+export AWS_ACCESS_KEY=$SCW_ACCESS_KEY
+export AWS_SECRET_KEY=$SCW_SECRET_KEY
+
+pulumi login 's3://laga-pulumi-state-admin?endpoint=https://s3.fr-par.scw.cloud&region=fr-par'
+pulumi stack select prod
+
+pulumi up
+
+pulumi logout
+"""

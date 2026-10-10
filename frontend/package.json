@@ -9,9 +9,11 @@
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json",
     "test": "vitest",
+    "test:e2e": "playwright test",
     "test:ui": "vitest --ui"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@sveltejs/vite-plugin-svelte": "^7.1.2",
     "@tsconfig/svelte": "^5.0.8",
     "@types/node": "^24.12.3",
@@ -26,6 +28,7 @@
   },
   "dependencies": {
     "@awesome.me/webawesome": "^3.8.0",
+    "@simplewebauthn/browser": "^13.3.0",
     "loro-crdt": "^1.13.3",
     "sv-router": "^0.17.0",
     "zod": "^4.4.3"

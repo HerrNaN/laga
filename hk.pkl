@@ -14,7 +14,8 @@ local linters = new Mapping<String, Step> {
   ["go-imports"] = Builtins.go_imports
   ["go-lines"] = Builtins.go_lines
   ["go-sec"] = (Builtins.go_sec) {
-    check = "cd {{workspace}} && gosec -quiet ./..."
+    // sqlc's generated query names trigger the hardcoded-credentials heuristic.
+    check = "cd {{workspace}} && gosec -exclude-generated -quiet ./..."
   }
   ["go-vet"] = Builtins.go_vet
   ["go-golangci-lint"] = Builtins.golangci_lint
@@ -39,6 +40,17 @@ local linters = new Mapping<String, Step> {
   }
 }
 
+local tests = new Mapping<String, Step> {
+  ["go-tests"] {
+    workspace_indicator = "go.mod"
+    check = "cd {{workspace}} && go test -race ./..."
+  }
+  ["web-e2e-tests"] {
+    check = "pnpm test:e2e"
+    dir = "frontend"
+  }
+}
+
 local audit = new Mapping<String, Step> {
   ["go-vuln-check"] = Builtins.go_vuln_check
 }
@@ -50,6 +62,9 @@ hooks {
   }
   ["check"] {
     steps = linters
+  }
+  ["test"] {
+    steps = tests
   }
   ["audit"] {
     steps = audit
